@@ -1,0 +1,133 @@
+'use client';
+import { Button, Stack, Text } from '@chakra-ui/react';
+import { BsBookmarkCheckFill } from 'react-icons/bs';
+import Web3 from 'web3';
+import { useAuth } from '@/context/Account';
+import { useState } from 'react';
+import { IoTime } from 'react-icons/io5';
+import { FaCube, FaUniversity } from 'react-icons/fa';
+
+export default function Page() {
+  const { address } = useAuth();
+  const [verifyValue, setVerifyValue] = useState<string | null>(null);
+  const [inspect, setInspect] = useState<boolean | null>(null);
+  const [valueError, setValueError] = useState('');
+  const [school, setSchool] = useState<number | string>('n/a');
+  const [block, setBlock] = useState<number | string>('n/a');
+  const [time, setTime] = useState<Date | string>(new Date()); // Set initial state to the current date
+
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.readAsText(file, 'UTF-8');
+      reader.onload = (evt) => {
+        const fileContent = evt.target?.result as string;
+        const hashedContent = Web3.utils.soliditySha3(fileContent);
+        if (hashedContent) {
+          setVerifyValue(hashedContent);
+        }
+      };
+      reader.onerror = (evt) => {
+        console.error('Error reading file:', evt);
+      };
+    }
+  };
+  console.log('school', school);
+  const verifyHash = async () => {
+    if (verifyValue) {
+      setValueError('Түр хүлээнэ үү...');
+      await window.contract.methods
+        .findDocHash(verifyValue)
+        .call({ from: window.localStorage.getItem('userAddress') })
+        .then((result: [string, string, string, string]) => {
+          if (result[0] !== '0' && result[1] !== '0') {
+            setValueError('Амжилттай...');
+            console.log('result', result);
+            print_verification_info(result, true);
+          } else {
+            console.log('result', result);
+            print_verification_info(result, false);
+          }
+        });
+    }
+  };
+
+  const print_verification_info = (
+    result: [string, string, string, string],
+    is_verified: boolean
+  ) => {
+    if (is_verified) {
+      console.log('result[1]', result[1]);
+      console.log('result[2]', result[2]);
+      console.log('result[3]', result[3]);
+
+      setInspect(true);
+      setSchool(result[2]);
+      const t = new Date();
+
+      t.setSeconds(parseInt(result[0]));
+      t.setHours(t.getHours() + 3);
+      console.log('t', t);
+      setTime(t);
+      console.log('t.toString()', t);
+      setBlock(result[0]);
+    } else if (is_verified === false) {
+      setInspect(false);
+    }
+  };
+
+  const truncateAddress = (address: string) => {
+    if (!address) return;
+    return `${address.substr(0, 7)}...${address.substr(
+      address.length - 8,
+      address.length
+    )}`;
+  };
+
+  return (
+    <Stack h='calc(100vh - 100px)' textColor='black'>
+      <label htmlFor='file-upload' style={{ position: 'relative' }}>
+        <input
+          onChange={handleFileChange}
+          id='doc-file'
+          type='file'
+          accept='application/pdf, image/*'
+        />
+      </label>
+      <Button onClick={verifyHash}>Verify</Button>
+      {inspect !== null && (
+        <Stack>
+          <Text color={inspect ? 'green' : 'red'}>
+            {inspect
+              ? 'Диплом баталгаажуулалт амжилттай. 😊'
+              : 'Диплом баталгаажаагүй байна.'}
+          </Text>
+          <Stack direction={'row'} alignItems={'center'}>
+            <BsBookmarkCheckFill />
+            <Text>{truncateAddress(verifyValue || '')}</Text>
+          </Stack>
+          {inspect && (
+            <>
+              <Stack direction={'row'} alignItems={'center'}>
+                <FaUniversity />
+                <Text>{school}</Text>
+              </Stack>
+              <Stack direction={'row'} alignItems={'center'}>
+                <IoTime />
+                <Text>{typeof time === 'string' ? time : time.toString()}</Text>
+              </Stack>
+
+              <Stack direction={'row'} alignItems={'center'}>
+                <FaCube />
+                <Text> {block}</Text>
+              </Stack>
+            </>
+          )}
+        </Stack>
+      )}
+    </Stack>
+  );
+}
