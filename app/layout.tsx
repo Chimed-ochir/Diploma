@@ -4,7 +4,6 @@ import './globals.css';
 import { Box, ChakraProvider, Stack } from '@chakra-ui/react';
 import { Header } from '@/components/Header';
 import { AuthProvider } from '@/context/Account';
-import { Head } from 'next/document';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -28,19 +27,31 @@ export default function RootLayout({
         <ChakraProvider>
           <AuthProvider>
             <Stack
+              // style={{
+              //   // background: 'rgb(8,105,174)',
+              //   background:
+              //     'linear-gradient(260deg, rgba(8,105,174,1) 0%, rgba(12,41,85,1) 100%)',
+              // }}
               bg='white'
               gap='0'
-              // backgroundImage='url(https://images.theconversation.com/files/121656/original/image-20160509-23367-kxbc3k.jpg?ixlib=rb-1.1.0&rect=345%2C0%2C2178%2C1059&q=45&auto=format&w=1356&h=668&fit=crop)'
-              // backgroundSize={'cover'}
-              // backgroundPosition='center'
-              // backgroundRepeat={'no-repeat'}
             >
               <Stack bg='white' zIndex={'1'}>
                 <Header />
               </Stack>
-              <Stack w='80%' mx='auto' pt='20px'>
-                {children}
-              </Stack>
+
+              {/* <Box w='100vw' h='100vh'>
+                <video
+                  autoPlay
+                  muted
+                  loop
+                  id='myVideo'
+                  controls={false}
+                  style={{ width: '100%', height: '100%' }}
+                >
+                  <source src='./video5.mp4' type='video/mp4' />
+                </video>{' '}
+              </Box> */}
+              <Stack>{children}</Stack>
             </Stack>
           </AuthProvider>
         </ChakraProvider>

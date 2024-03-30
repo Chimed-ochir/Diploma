@@ -255,10 +255,12 @@ const CONTRACT: ContractType = {
     },
   ],
 };
-const projectId = '28LuNAotbXzcvtpOcE9F8ayKOeP';
+// const projectId = '28LuNAotbXzcvtpOcE9F8ayKOeP';
+const projectId = '5289d049085c47688271917af6cc1f4a';
+
 // const projectId = '5289d049085c47688271917af6cc1f4a';
 //Your api secret in ifura.io
-const projectSecret = '3de3d9c099c6c0c168e39b8bc03e2f7a';
+const projectSecret = 'oQtcgoWwe815ozW0YhbajgvwxnwXqea6i/Jeycp2vG6yyluWIY5Xug';
 declare global {
   interface Window {
     ethereum?: any;
@@ -273,7 +275,7 @@ export default function Page() {
 
   const [hash, setHash] = useState<string>('');
   const [errorUpload, setErrorUpload] = useState<string>('');
-  const { chainId, address, count, name, balance } = useAuth();
+  const { chainId, address, view, name, balance } = useAuth();
   const router = useRouter();
 
   const [wait, setWait] = useState(false);
@@ -380,77 +382,113 @@ export default function Page() {
   };
 
   return (
-    <Stack bg='white' h={'100vh'} p={4} spacing={4}>
+    <Stack h='calc(100vh - 100px)'>
       <Stack
-        bg='#2E68FF'
-        borderRadius={'28px'}
-        py='20px'
-        pl='25px'
-        textAlign={'center'}
-        w='100%'
+        p={4}
         spacing={4}
-      >
-        <Stack direction='row' alignItems='center'>
-          <FaUniversity color='orange' size={28} />
-          <Text textAlign='center' lineHeight={'27px'}>
-            {name}
-          </Text>
-        </Stack>
-        <Stack direction='row' alignItems='center'>
-          <PiFolderSimpleUserDuotone color='blue' size={28} />
-          <Text textAlign='center' lineHeight={'27px'}>
-            {address}
-          </Text>
-        </Stack>
-        <Stack direction='row' alignItems='center'>
-          <BiShapeTriangle color='red' size={28} />
-          <Text textAlign='center' lineHeight={'27px'}>
-            {chainId}
-          </Text>
-        </Stack>
-        <Stack direction='row' alignItems='center'>
-          <MdOutlineAccountBalanceWallet color='yellow' size={28} />
-          <Text lineHeight={'27px'} textAlign='center'>
-            {balance}
-          </Text>
-        </Stack>
-      </Stack>
-      <Stack
-        bg='#2E68FF'
+        w='80%'
+        mx='auto'
         borderRadius={'28px'}
-        py='20px'
-        pl='25px'
-        textAlign={'center'}
-        w='100%'
-        spacing={4}
+        style={{
+          // background: 'rgb(8,105,174)',
+          background:
+            'linear-gradient(260deg, rgba(8,105,174,1) 0%, rgba(12,41,85,1) 100%)',
+        }}
+        // bg='#0c2955'
+        // bg='white'
+        mt='20px'
+        color='black'
+        fontSize={'24px'}
+        shadow={'5px'}
       >
-        <label htmlFor='file-upload' style={{ position: 'relative' }}>
-          <input
-            onChange={handleFileChange}
-            id='doc-file'
-            type='file'
-            accept='application/pdf, image/*'
-          />
-        </label>
-        {wait ? (
-          <Text textAlign='center' color='white' fontSize='lg'>
-            loading . . .
-          </Text>
-        ) : errorUpload ? (
-          <Text textAlign='center' color='white' fontSize='lg'>
-            Error Upload . . .
-          </Text>
-        ) : inspect ? (
-          <Text textAlign='center' color='white' fontSize='lg'>
-            Document Hashed 😎
-          </Text>
-        ) : inspect === false ? (
-          <Text textAlign='center' color='red' fontSize='lg'>
-            Document Hashed error!
-          </Text>
+        {true ? (
+          <Stack
+            borderRadius={'28px'}
+            py='20px'
+            pl='25px'
+            textAlign={'center'}
+            w='100%'
+            color={'white'}
+            spacing={4}
+          >
+            <Stack direction='row' alignItems='center'>
+              <FaUniversity color='orange' size={28} />
+              <Text textAlign='center' lineHeight={'27px'}>
+                {name}
+              </Text>
+            </Stack>
+            <Stack direction='row' alignItems='center'>
+              <PiFolderSimpleUserDuotone color='blue' size={28} />
+              <Text textAlign='center' lineHeight={'27px'}>
+                {address}
+              </Text>
+            </Stack>
+            <Stack direction='row' alignItems='center'>
+              <BiShapeTriangle color='red' size={28} />
+              <Text textAlign='center' lineHeight={'27px'}>
+                {chainId}
+              </Text>
+            </Stack>
+            <Stack direction='row' alignItems='center'>
+              <MdOutlineAccountBalanceWallet color='yellow' size={28} />
+              <Text lineHeight={'27px'} textAlign='center'>
+                {balance}
+              </Text>
+            </Stack>
+          </Stack>
         ) : null}
+        <Stack
+          borderRadius={'28px'}
+          py='20px'
+          pl='25px'
+          textAlign={'center'}
+          // bg='#2E68FF'
+          bg='#0a4881'
+          color='white'
+          border={'1px solid white'}
+          w='100%'
+          spacing={4}
+        >
+          <label htmlFor='file-upload' style={{ position: 'relative' }}>
+            <input
+              onChange={handleFileChange}
+              id='doc-file'
+              type='file'
+              color='white'
+              accept='application/pdf, image/*'
+            />
+          </label>
+          {wait ? (
+            <Text textAlign='center' color='white' fontSize='lg'>
+              loading . . .
+            </Text>
+          ) : errorUpload ? (
+            <Text textAlign='center' color='white' fontSize='lg'>
+              Error Upload . . .
+            </Text>
+          ) : inspect ? (
+            <Text textAlign='center' color='white' fontSize='lg'>
+              Document Hashed 😎
+            </Text>
+          ) : inspect === false ? (
+            <Text textAlign='center' color='red' fontSize='lg'>
+              Document Hashed error!
+            </Text>
+          ) : null}
+        </Stack>
+        <Button
+          onClick={handleSendHash}
+          borderRadius={'28px'}
+          bg='#2E68FF'
+          color='white'
+          w='300px'
+          mx='auto'
+          fontSize={'24px'}
+          height={'54px'}
+        >
+          Upload
+        </Button>
       </Stack>
-      <Button onClick={handleSendHash}>Upload</Button>
     </Stack>
   );
 }

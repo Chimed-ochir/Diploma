@@ -261,6 +261,7 @@ interface AuthProviderValueType {
   balance: string;
   name: string;
   chainId: string;
+  view: boolean;
 }
 
 function parseJwt(token: string) {
@@ -285,6 +286,7 @@ export const AuthProvider = ({ children }: React.PropsWithChildren) => {
   const [chainId, setChainId] = useState('Unknown ChainID');
   const [balance, setBalance] = useState('n/a');
   const [name, setName] = useState('n/a');
+  const [view, setView] = useState(false);
   interface CustomWindow extends Window {
     ethereum?: any;
     userAddress?: string | null;
@@ -305,14 +307,14 @@ export const AuthProvider = ({ children }: React.PropsWithChildren) => {
         const selectedAccount = accounts[0];
 
         if (!selectedAccount) {
-          throw new Error('No account selected 👍');
+          throw new Error('Нэвтрэх хаяг сонгоогүй байна. 👍');
         }
-
+        setView(true);
         toast({
-          title: 'Account connected.',
-          description: "We've created your account for you.",
+          title: 'Амжилттай.',
+          description: 'МетаМаск хаяг амжилттай холбогдлоо',
           status: 'success',
-          duration: 9000,
+          duration: 5000,
           isClosable: true,
         });
         customWindow.userAddress = selectedAccount;
@@ -322,7 +324,7 @@ export const AuthProvider = ({ children }: React.PropsWithChildren) => {
           'userAddress',
           customWindow.userAddress ?? ''
         ); // Use optional chaining or a fallback value
-
+        // window.location.reload();
         // customWindow.location.reload();
       } catch (error) {
         console.error(error);
@@ -332,33 +334,20 @@ export const AuthProvider = ({ children }: React.PropsWithChildren) => {
       // Handle case where window.ethereum is not available
       // Disable buttons or show a warning
       toast({
-        title: 'MetaMask is not installed.',
-        description: 'Please install MetaMask',
+        title: 'МетаМаск extention байхгүй байна.',
+        description: 'МетаМаск суулгана уу.',
         status: 'error',
-        duration: 9000,
+        duration: 5000,
         isClosable: true,
       });
     }
   };
-  // useEffect(() => {
-  //   console.log('Connecting useEffect');
-  //   connect();
-  // }, []);
-
   function disconnect() {
     customWindow.userAddress = null;
-    setAddress('');
-    const walletStatus = document.querySelector('.wallet-status');
-    if (walletStatus) {
-      walletStatus.classList.add('d-none');
-    }
-
+    console.log('run disconnect');
+    setAddress('n/a');
+    setView(false);
     window.localStorage.removeItem('userAddress');
-
-    // const uploadButton = document.getElementById('upload_file_button');
-    // if (uploadButton) {
-    //   uploadButton.classList.add('disabled');
-    // }
   }
   async function listen() {
     console.log('Listening for events...');
@@ -387,12 +376,15 @@ export const AuthProvider = ({ children }: React.PropsWithChildren) => {
       console.error('Error fetching events:', error);
     }
   }
-  if (typeof window !== 'undefined' && window.ethereum) {
-    console.log('if run');
-    window.ethereum.on('accountsChanged', function () {
-      connect();
-    });
-  }
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.ethereum) {
+      console.log('if run');
+      window.ethereum.on('accountsChanged', function () {
+        connect();
+      });
+    }
+  }, []);
+
   async function getCounters() {
     await window.contract.methods
       .count_Exporters()
@@ -478,7 +470,8 @@ export const AuthProvider = ({ children }: React.PropsWithChildren) => {
   useEffect(() => {
     const onLoad = async () => {
       const userAddress = window.localStorage.getItem('userAddress');
-      setAddress(userAddress || '');
+      setAddress(userAddress || 'n/a');
+      setView(userAddress ? true : false);
       if (customWindow.ethereum) {
         console.log('Onload');
         (customWindow as any).web3 = new Web3(customWindow.ethereum);
@@ -519,6 +512,7 @@ export const AuthProvider = ({ children }: React.PropsWithChildren) => {
         balance,
         name,
         chainId,
+        view,
       }}
     >
       {children}

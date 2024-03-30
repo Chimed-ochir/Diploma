@@ -1,63 +1,51 @@
-import { Box, Stack, Text } from '@chakra-ui/react';
+'use client';
+import { Box, Button, Stack, Text } from '@chakra-ui/react';
+
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
+  const router = useRouter();
   return (
-    <Stack h='calc(100vh - 100px)' fontSize={'64px'}>
-      {/* <Box w='100%' h='100%'>
-
-        <video
-          autoPlay
-          muted
-          loop
-          id='myVideo'
-          controls={false}
-          style={{ width: '100%', height: '100%' }}
+    <Stack
+      h='calc(100vh - 100px)'
+      fontSize={'64px'}
+      // bg={'#ceeeff'}
+      bgImage={'./graduate5.jpeg'}
+      bgRepeat={'none'}
+      bgPosition={'center'}
+      bgSize={'cover'}
+      w='100%'
+    >
+      <Stack position={'absolute'} top={'230px'} w='45%' left='60px'>
+        {/* <Stack>
+         
+        </Stack> */}
+        <Stack w='100%' textAlign={'center'}>
+          <Text fontWeight='600' color='white' fontSize={'44'}>
+            Блокчэйнд Баталгаажсан{' '}
+          </Text>
+          <Text fontWeight='600' color='white' fontSize={'64'}>
+            {' '}
+            Цахим Диплом
+          </Text>{' '}
+          {/* <Text color='white' fontSize={'24px'} w='60%'>
+            {' '}
+            DIPLOMA.mn платформ нь таны үйл ажиллагаанд үр ашиг, аюулгүй байдлыг
+            бий болгох зорилготой платформ юм.
+          </Text>{' '} */}
+        </Stack>
+        <Button
+          color='white'
+          bg='#2E68FF'
+          height={'54px'}
+          w='200px'
+          mx='auto'
+          mt='30px'
+          onClick={() => router.push('/verify')}
         >
-          <source src='./video2.mp4' type='video/mp4' />
-        </video>{' '}
-      </Box>
-
-      <Box w='100%' h='100%'>
-        <video
-          autoPlay
-          muted
-          loop
-          id='myVideo'
-          controls={false}
-          style={{ width: '100%', height: '100%' }}
-        >
-          <source src='./video4.mp4' type='video/mp4' />
-        </video>{' '}
-      </Box>
-
-      <Box w='100%' h='100%'>
-        <video
-          autoPlay
-          muted
-          loop
-          id='myVideo'
-          controls={false}
-          style={{ width: '100%', height: '100%' }}
-        >
-          <source src='./video6.mp4' type='video/mp4' />
-        </video>{' '}
-      </Box>
-      <Box w='100%' h='100%'>
-        <video
-          autoPlay
-          muted
-          loop
-          id='myVideo'
-          controls={false}
-          style={{ width: '100%', height: '100%' }}
-        >
-          <source src='./video7.mp4' type='video/mp4' />
-        </video>{' '}
-      </Box> */}
-      <Text w='600px' color='black' fontSize={'34'}>
-        Блокчэйнд Баталгаажсан{' '}
-      </Text>
-      <Text w='600px'> Цахим Диплом</Text>
+          Шалгах
+        </Button>
+      </Stack>
     </Stack>
   );
 }

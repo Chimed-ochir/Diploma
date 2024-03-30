@@ -9,7 +9,7 @@ import { useAuth } from '@/context/Account';
 import { useState } from 'react';
 
 export default function Page() {
-  const { chainId, address, count, explorer, balance } = useAuth();
+  const { chainId, address, count, view, explorer, balance } = useAuth();
   const [loading, setLoading] = useState(false);
   const [loading2, setLoading2] = useState(false);
   const [loading3, setLoading3] = useState(false);
@@ -79,52 +79,68 @@ export default function Page() {
     }
   };
   return (
-    <Stack h='calc(100vh - 100px)' color='white' alignItems='center' gap='1rem'>
+    <Stack
+      h='calc(100vh - 100px)'
+      color='white'
+      alignItems='center'
+      gap='1rem'
+      w='80%'
+      mx='auto'
+      mt='20px'
+    >
+      {view ? (
+        <Stack
+          bg='#2E68FF'
+          borderRadius={'28px'}
+          py='20px'
+          pl='25px'
+          textAlign={'center'}
+          w='100%'
+        >
+          <Stack direction='row'>
+            <PiFolderSimpleUserDuotone color='blue' size={28} />
+
+            <Text>{address}</Text>
+          </Stack>
+          <Stack direction='row'>
+            <BiShapeTriangle color='red' size={28} />
+
+            <Text>{chainId}</Text>
+          </Stack>
+          <Stack direction='row'>
+            <MdOutlineAccountBalanceWallet color='yellow' size={28} />
+
+            <Text>{balance}</Text>
+          </Stack>
+          <Stack direction='row'>
+            <FaUniversity color='orange' size={28} />
+            <Text>{count}</Text>
+          </Stack>
+          <Stack direction='row'>
+            <IoIosDocument color='yellow' size={28} />
+
+            <Text>{explorer}</Text>
+          </Stack>
+        </Stack>
+      ) : null}
       <Stack
         bg='#2E68FF'
         borderRadius={'28px'}
         py='20px'
         pl='25px'
         textAlign={'center'}
-        w='100%'
-      >
-        <Stack direction='row'>
-          <PiFolderSimpleUserDuotone color='blue' size={28} />
-
-          <Text>{address}</Text>
-        </Stack>
-        <Stack direction='row'>
-          <BiShapeTriangle color='red' size={28} />
-
-          <Text>{chainId}</Text>
-        </Stack>
-        <Stack direction='row'>
-          <MdOutlineAccountBalanceWallet color='yellow' size={28} />
-
-          <Text>{balance}</Text>
-        </Stack>
-        <Stack direction='row'>
-          <FaUniversity color='orange' size={28} />
-          <Text>{count}</Text>
-        </Stack>
-        <Stack direction='row'>
-          <IoIosDocument color='yellow' size={28} />
-
-          <Text>{explorer}</Text>
-        </Stack>
-      </Stack>
-      <Stack
-        bg='#2E68FF'
-        borderRadius={'28px'}
-        py='20px'
-        pl='25px'
-        textAlign={'center'}
-        height={'250px'}
+        // height={'250px'}
         w='640px'
         justifyContent={'space-between'}
         alignItems='center'
+        minHeight={'300px'}
       >
-        <Stack h='55%' w='90%' justifyContent={'space-between'} color='black'>
+        <Stack
+          w='90%'
+          justifyContent={'space-between'}
+          color='black'
+          minHeight={'150px'}
+        >
           <Input
             h='54px'
             bg='#FFFFFF'
@@ -152,7 +168,7 @@ export default function Page() {
           <Button
             colorScheme='yellow'
             h='54px'
-            bg='red'
+            bg='green'
             borderRadius={'17px'}
             px='8px'
             onClick={addExporter}
@@ -176,7 +192,7 @@ export default function Page() {
           <Button
             colorScheme='yellow'
             h='54px'
-            bg='red'
+            bg='yellow'
             borderRadius={'17px'}
             px='5px'
             isLoading={loading3}

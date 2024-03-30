@@ -88,46 +88,94 @@ export default function Page() {
   };
 
   return (
-    <Stack h='calc(100vh - 100px)' textColor='black'>
-      <label htmlFor='file-upload' style={{ position: 'relative' }}>
-        <input
-          onChange={handleFileChange}
-          id='doc-file'
-          type='file'
-          accept='application/pdf, image/*'
-        />
-      </label>
-      <Button onClick={verifyHash}>Verify</Button>
-      {inspect !== null && (
-        <Stack>
-          <Text color={inspect ? 'green' : 'red'}>
-            {inspect
-              ? 'Диплом баталгаажуулалт амжилттай. 😊'
-              : 'Диплом баталгаажаагүй байна.'}
-          </Text>
-          <Stack direction={'row'} alignItems={'center'}>
-            <BsBookmarkCheckFill />
-            <Text>{truncateAddress(verifyValue || '')}</Text>
-          </Stack>
-          {inspect && (
-            <>
-              <Stack direction={'row'} alignItems={'center'}>
-                <FaUniversity />
-                <Text>{school}</Text>
-              </Stack>
-              <Stack direction={'row'} alignItems={'center'}>
-                <IoTime />
-                <Text>{typeof time === 'string' ? time : time.toString()}</Text>
-              </Stack>
-
-              <Stack direction={'row'} alignItems={'center'}>
-                <FaCube />
-                <Text> {block}</Text>
-              </Stack>
-            </>
-          )}
+    <Stack h='calc(100vh - 100px)' w='80%' mx='auto' mt='20px'>
+      <Stack
+        textColor='black'
+        borderRadius={'28px'}
+        minHeight={'300px'}
+        style={{
+          // background: 'rgb(8,105,174)',
+          background:
+            'linear-gradient(260deg, rgba(8,105,174,1) 0%, rgba(12,41,85,1) 100%)',
+        }}
+        justifyContent={'space-evenly'}
+        alignItems={'center'}
+        py='20px'
+      >
+        <Stack
+          borderRadius={'28px'}
+          py='20px'
+          pl='25px'
+          textAlign={'center'}
+          // bg='#2E68FF'
+          bg='#0a4881'
+          color='white'
+          border={'1px solid white'}
+          w='90%'
+          spacing={4}
+        >
+          <label htmlFor='file-upload' style={{ position: 'relative' }}>
+            <input
+              onChange={handleFileChange}
+              id='doc-file'
+              type='file'
+              accept='application/pdf, image/*'
+            />
+          </label>
         </Stack>
-      )}
+        <Button
+          onClick={verifyHash}
+          borderRadius={'28px'}
+          bg='#2E68FF'
+          color='white'
+          w='300px'
+          mx='auto'
+          fontSize={'24px'}
+          height={'54px'}
+        >
+          Verify
+        </Button>
+        {inspect !== null && (
+          <Stack
+            color='black'
+            fontSize='24px'
+            bg='white'
+            w='60%'
+            borderRadius={'28px'}
+            pl='20px'
+            py='10px'
+          >
+            <Text color={inspect ? 'green' : 'red'}>
+              {inspect
+                ? 'Диплом баталгаажуулалт амжилттай. 😊'
+                : 'Диплом баталгаажаагүй байна.'}
+            </Text>
+            <Stack direction={'row'} alignItems={'center'}>
+              <BsBookmarkCheckFill />
+              <Text>{truncateAddress(verifyValue || '')}</Text>
+            </Stack>
+            {inspect && (
+              <>
+                <Stack direction={'row'} alignItems={'center'}>
+                  <FaUniversity />
+                  <Text>{school}</Text>
+                </Stack>
+                <Stack direction={'row'} alignItems={'center'}>
+                  <IoTime />
+                  <Text>
+                    {typeof time === 'string' ? time : time.toString()}
+                  </Text>
+                </Stack>
+
+                <Stack direction={'row'} alignItems={'center'}>
+                  <FaCube />
+                  <Text> {block}</Text>
+                </Stack>
+              </>
+            )}
+          </Stack>
+        )}
+      </Stack>
     </Stack>
   );
 }
