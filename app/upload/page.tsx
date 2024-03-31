@@ -255,12 +255,13 @@ const CONTRACT: ContractType = {
     },
   ],
 };
-// const projectId = '28LuNAotbXzcvtpOcE9F8ayKOeP';
-const projectId = '5289d049085c47688271917af6cc1f4a';
+const projectId = '28LuNAotbXzcvtpOcE9F8ayKOeP';
+// const projectId = '5289d049085c47688271917af6cc1f4a';
 
 // const projectId = '5289d049085c47688271917af6cc1f4a';
 //Your api secret in ifura.io
-const projectSecret = 'oQtcgoWwe815ozW0YhbajgvwxnwXqea6i/Jeycp2vG6yyluWIY5Xug';
+// const projectSecret = 'oQtcgoWwe815ozW0YhbajgvwxnwXqea6i/Jeycp2vG6yyluWIY5Xug';
+const projectSecret = '3de3d9c099c6c0c168e39b8bc03e2f7a';
 declare global {
   interface Window {
     ethereum?: any;

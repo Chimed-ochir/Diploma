@@ -133,7 +133,7 @@ export default function Page() {
           fontSize={'24px'}
           height={'54px'}
         >
-          Verify
+          Шалгах
         </Button>
         {inspect !== null && (
           <Stack

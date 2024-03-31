@@ -4,6 +4,7 @@ import './globals.css';
 import { Box, ChakraProvider, Stack } from '@chakra-ui/react';
 import { Header } from '@/components/Header';
 import { AuthProvider } from '@/context/Account';
+import { Footer } from '@/components/Footer';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -27,11 +28,11 @@ export default function RootLayout({
         <ChakraProvider>
           <AuthProvider>
             <Stack
-              // style={{
-              //   // background: 'rgb(8,105,174)',
-              //   background:
-              //     'linear-gradient(260deg, rgba(8,105,174,1) 0%, rgba(12,41,85,1) 100%)',
-              // }}
+              style={{
+                //   // background: 'rgb(8,105,174)',
+                background:
+                  'linear-gradient(260deg, rgba(8,105,174,1) 0%, rgba(12,41,85,1) 100%)',
+              }}
               bg='white'
               gap='0'
             >
@@ -52,6 +53,7 @@ export default function RootLayout({
                 </video>{' '}
               </Box> */}
               <Stack>{children}</Stack>
+              <Footer />
             </Stack>
           </AuthProvider>
         </ChakraProvider>

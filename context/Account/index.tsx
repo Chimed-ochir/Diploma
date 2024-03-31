@@ -380,12 +380,14 @@ export const AuthProvider = ({ children }: React.PropsWithChildren) => {
     if (typeof window !== 'undefined' && window.ethereum) {
       console.log('if run');
       window.ethereum.on('accountsChanged', function () {
+        console.log('work use effect 1');
         connect();
       });
     }
   }, []);
 
   async function getCounters() {
+    console.log('window.contract.methods', window.contract.methods);
     await window.contract.methods
       .count_Exporters()
       .call({ from: window.userAddress })
@@ -409,6 +411,7 @@ export const AuthProvider = ({ children }: React.PropsWithChildren) => {
         .call({ from: userAddress })
 
         .then((result: any) => {
+          console.log('result', result);
           setName(result);
         });
     } catch (error) {
@@ -480,9 +483,9 @@ export const AuthProvider = ({ children }: React.PropsWithChildren) => {
           customWindow as any
         ).web3.eth.Contract(CONTRACT.abi, CONTRACT.address);
         if (userAddress && userAddress.length > 10) {
-          if (window.location.pathname == '/admin') {
-            await getCounters();
-          }
+          // if (window.location.pathname == '/admin') {
+          await getCounters();
+          // }
           await get_ethBalance();
           await getExporterInfo();
           await get_ChainID();

@@ -14,9 +14,16 @@ import { useEffect, useState } from 'react';
 export const Header = () => {
   const path = usePathname();
   const [currentTab, setCurrentTab] = useState('Home');
-
+  const tabs = ['Home', 'Verify'];
   useEffect(() => {
-    const tabs = ['Home', 'Verify', 'Upload', 'Admin'];
+    if (
+      typeof window !== 'undefined' &&
+      window.localStorage.getItem('userAddress') ===
+        '0x896715dC4eAF034785B3b5a1f7078478ac24e77f'
+    ) {
+      tabs.push('Admin');
+    }
+
     const matchingTab = tabs.find((tab) => {
       if (path === '') {
         return 'Home';
@@ -32,10 +39,22 @@ export const Header = () => {
     }
   }, [path]);
   const { connect, disconnect, address } = useAuth();
+  if (address !== 'n/a') {
+    // If address is truthy, add 'Upload' tab
+    tabs.push('Upload');
+  } else {
+    // If address is falsy, remove 'Upload' tab if it exists
+    const index = tabs.indexOf('Upload');
+    if (index !== -1) {
+      tabs.splice(index, 1);
+    }
+  }
+
   return (
     <Stack
       w='100%'
       bg='#0C2955'
+      // bg='white'
       boxShadow='0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12)'
     >
       <Stack
@@ -63,7 +82,7 @@ export const Header = () => {
           justifyContent={'space-around'}
           ml={'40px'}
         >
-          {['Home', 'Verify', 'Upload', 'Admin'].map((tab) => (
+          {tabs.map((tab) => (
             <Link
               href={`/${tab === 'Home' ? '/' : tab.toLowerCase()}`}
               key={tab}
