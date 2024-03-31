@@ -15,6 +15,12 @@ export const Header = () => {
   const path = usePathname();
   const [currentTab, setCurrentTab] = useState('Home');
   const tabs = ['Home', 'Verify'];
+  const accounts = [
+    '0x896715dc4eaf034785b3b5a1f7078478ac24e77f',
+    '0xc48b5c6bfad52b536c523ad5fe2484dfd4fbde2b',
+    '0x44aa9b64f2ddd1be45c2fad3cebc6f212750739f',
+    '0xdb7343fff975b98d64aa3c333e0b246ad71d175d',
+  ];
   useEffect(() => {
     if (
       typeof window !== 'undefined' &&
@@ -39,7 +45,8 @@ export const Header = () => {
     }
   }, [path]);
   const { connect, disconnect, address } = useAuth();
-  if (address !== 'n/a') {
+  console.log('address', address);
+  if (address !== 'n/a' && address && accounts.includes(address)) {
     // If address is truthy, add 'Upload' tab
     tabs.push('Upload');
   } else {

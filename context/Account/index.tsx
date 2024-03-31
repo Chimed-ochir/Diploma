@@ -262,6 +262,7 @@ interface AuthProviderValueType {
   name: string;
   chainId: string;
   view: boolean;
+  meta: boolean;
 }
 
 function parseJwt(token: string) {
@@ -287,6 +288,7 @@ export const AuthProvider = ({ children }: React.PropsWithChildren) => {
   const [balance, setBalance] = useState('n/a');
   const [name, setName] = useState('n/a');
   const [view, setView] = useState(false);
+  const [meta, setMeta] = useState(false);
   interface CustomWindow extends Window {
     ethereum?: any;
     userAddress?: string | null;
@@ -325,7 +327,7 @@ export const AuthProvider = ({ children }: React.PropsWithChildren) => {
           customWindow.userAddress ?? ''
         ); // Use optional chaining or a fallback value
         // window.location.reload();
-        // customWindow.location.reload();
+        customWindow.location.reload();
       } catch (error) {
         console.error(error);
         // Handle error, perhaps show a message to the user
@@ -412,7 +414,7 @@ export const AuthProvider = ({ children }: React.PropsWithChildren) => {
 
         .then((result: any) => {
           console.log('result', result);
-          setName(result);
+          setName(result ? result : 'n/a');
         });
     } catch (error) {
       setName('n/a');
@@ -472,6 +474,7 @@ export const AuthProvider = ({ children }: React.PropsWithChildren) => {
   }
   useEffect(() => {
     const onLoad = async () => {
+      console.log('onload run yeah');
       const userAddress = window.localStorage.getItem('userAddress');
       setAddress(userAddress || 'n/a');
       setView(userAddress ? true : false);
@@ -494,6 +497,8 @@ export const AuthProvider = ({ children }: React.PropsWithChildren) => {
             listen();
           }, 0);
         }
+      } else {
+        setMeta(true);
       }
     };
 
@@ -516,6 +521,7 @@ export const AuthProvider = ({ children }: React.PropsWithChildren) => {
         name,
         chainId,
         view,
+        meta,
       }}
     >
       {children}

@@ -9,6 +9,7 @@ import { IoIosDocument } from 'react-icons/io';
 import Web3 from 'web3';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/Account';
+import MetaMaskAlert from '@/components/MetaMask';
 interface ContractType {
   address: string;
   network: string;
@@ -276,7 +277,7 @@ export default function Page() {
 
   const [hash, setHash] = useState<string>('');
   const [errorUpload, setErrorUpload] = useState<string>('');
-  const { chainId, address, view, name, balance } = useAuth();
+  const { chainId, address, view, meta, name, balance } = useAuth();
   const router = useRouter();
 
   const [wait, setWait] = useState(false);
@@ -402,7 +403,8 @@ export default function Page() {
         fontSize={'24px'}
         shadow={'5px'}
       >
-        {true ? (
+        {meta ? <MetaMaskAlert /> : null}
+        {view ? (
           <Stack
             borderRadius={'28px'}
             py='20px'
