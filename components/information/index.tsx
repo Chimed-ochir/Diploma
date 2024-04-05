@@ -28,7 +28,8 @@ const InformationCard: React.FC<InformationCardProps> = ({
       m={4}
       p={5}
       textAlign='center'
-      bg='gray.700'
+      // bg='gray.700'
+      bg='white'
       boxShadow='xl'
     >
       <Image src={icon} alt={heading} width={150} height={150} mx={'auto'} />
@@ -44,7 +45,7 @@ const InformationCard: React.FC<InformationCardProps> = ({
 
 const InformationSection: React.FC = () => {
   return (
-    <Box as='section' py={20} bg='gray.800' color='white'>
+    <Box as='section'>
       <Container maxW='container.xl'>
         <Stack justifyContent='center' direction='row'>
           <InformationCard

@@ -28,11 +28,9 @@ export default function RootLayout({
         <ChakraProvider>
           <AuthProvider>
             <Stack
-              style={{
-                //   // background: 'rgb(8,105,174)',
-                background:
-                  'linear-gradient(260deg, rgba(8,105,174,1) 0%, rgba(12,41,85,1) 100%)',
-              }}
+              // style={{
+              //   background: `radial-gradient(circle, rgba(15,80,138,1) 19%, rgba(10,72,129,1) 38%, rgba(1,5,30,1) 100%)`,
+              // }}
               bg='white'
               gap='0'
             >

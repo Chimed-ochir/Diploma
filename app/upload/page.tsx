@@ -384,20 +384,20 @@ export default function Page() {
   };
 
   return (
-    <Stack h='calc(100vh - 100px)'>
+    <Stack h='calc(100vh - 100px)' bg='white'>
       <Stack
         p={4}
         spacing={4}
         w='80%'
         mx='auto'
         borderRadius={'28px'}
-        style={{
-          // background: 'rgb(8,105,174)',
-          background:
-            'linear-gradient(260deg, rgba(8,105,174,1) 0%, rgba(12,41,85,1) 100%)',
-        }}
+        // style={{
+        //   // background: 'rgb(8,105,174)',
+        //   background:
+        //     'linear-gradient(260deg, rgba(8,105,174,1) 0%, rgba(12,41,85,1) 100%)',
+        // }}
         // bg='#0c2955'
-        // bg='white'
+        bg='#F6F4FF'
         mt='20px'
         color='black'
         fontSize={'24px'}
@@ -411,7 +411,7 @@ export default function Page() {
             pl='25px'
             textAlign={'center'}
             w='100%'
-            color={'white'}
+            color='black'
             spacing={4}
           >
             <Stack direction='row' alignItems='center'>
@@ -433,7 +433,7 @@ export default function Page() {
               </Text>
             </Stack>
             <Stack direction='row' alignItems='center'>
-              <MdOutlineAccountBalanceWallet color='yellow' size={28} />
+              <MdOutlineAccountBalanceWallet color='green' size={28} />
               <Text lineHeight={'27px'} textAlign='center'>
                 {balance}
               </Text>
@@ -441,14 +441,15 @@ export default function Page() {
           </Stack>
         ) : null}
         <Stack
-          borderRadius={'28px'}
+          borderRadius={'29px'}
           py='20px'
           pl='25px'
           textAlign={'center'}
+          border='1px solid #BCADFF'
           // bg='#2E68FF'
-          bg='#0a4881'
-          color='white'
-          border={'1px solid white'}
+          bg='white'
+          color='#2E68FF'
+          // border={'1px solid white'}
           w='100%'
           spacing={4}
         >
@@ -457,20 +458,20 @@ export default function Page() {
               onChange={handleFileChange}
               id='doc-file'
               type='file'
-              color='white'
+              color='#2E68FF'
               accept='application/pdf, image/*'
             />
           </label>
           {wait ? (
-            <Text textAlign='center' color='white' fontSize='lg'>
+            <Text textAlign='center' color='black' fontSize='lg'>
               loading . . .
             </Text>
           ) : errorUpload ? (
-            <Text textAlign='center' color='white' fontSize='lg'>
+            <Text textAlign='center' color='black' fontSize='lg'>
               Error Upload . . .
             </Text>
           ) : inspect ? (
-            <Text textAlign='center' color='white' fontSize='lg'>
+            <Text textAlign='center' color='black' fontSize='lg'>
               Document Hashed 😎
             </Text>
           ) : inspect === false ? (
