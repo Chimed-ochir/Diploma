@@ -17,7 +17,14 @@ const AboutSection: React.FC = () => {
       className='about d-flex align-items-center text-light py-5'
     >
       <Stack alignItems='center' w='90%' mx='auto' direction='row'>
-        <Box color='white'>
+        <Image
+          src='./update5.png'
+          alt='about'
+          width={400}
+          height={500}
+          ml='-150px'
+        />
+        <Box color='black'>
           <Text className='main-header-section'>Бидний тухай</Text>
           <Heading as='h1' size='xl' mt={4} mb={2}></Heading>
           <Text className='py-2 para-light'>
@@ -42,18 +49,10 @@ const AboutSection: React.FC = () => {
             баталгаажуулдаг.
           </Text>
 
-          <Box my={3}>
+          {/* <Box my={3}>
             <Button colorScheme='whiteAlpha'>Learn More</Button>
-          </Box>
+          </Box> */}
         </Box>
-
-        <Image
-          src='./gradutae2.jpeg'
-          alt='about'
-          width={500}
-          height={500}
-          borderRadius={'50%'}
-        />
       </Stack>
     </Box>
   );

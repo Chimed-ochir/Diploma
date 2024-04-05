@@ -93,14 +93,16 @@ export default function Page() {
         textColor='black'
         borderRadius={'28px'}
         minHeight={'300px'}
-        style={{
-          // background: 'rgb(8,105,174)',
-          background:
-            'linear-gradient(260deg, rgba(8,105,174,1) 0%, rgba(12,41,85,1) 100%)',
-        }}
+        // style={{
+        //   // background: 'rgb(8,105,174)',
+        //   background:
+        //     'linear-gradient(260deg, rgba(8,105,174,1) 0%, rgba(12,41,85,1) 100%)',
+        // }}
+        bg='#F6F4FF'
         justifyContent={'space-evenly'}
         alignItems={'center'}
         py='20px'
+        fontSize={'24px'}
       >
         <Stack
           borderRadius={'28px'}
@@ -108,9 +110,9 @@ export default function Page() {
           pl='25px'
           textAlign={'center'}
           // bg='#2E68FF'
-          bg='#0a4881'
-          color='white'
-          border={'1px solid white'}
+          bg='white'
+          color='#2E68FF'
+          border='1px solid #BCADFF'
           w='90%'
           spacing={4}
         >
@@ -144,6 +146,7 @@ export default function Page() {
             borderRadius={'28px'}
             pl='20px'
             py='10px'
+            border='1px solid #BCADFF'
           >
             <Text color={inspect ? 'green' : 'red'}>
               {inspect

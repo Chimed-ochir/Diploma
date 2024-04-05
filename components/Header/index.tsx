@@ -60,8 +60,8 @@ export const Header = () => {
   return (
     <Stack
       w='100%'
-      bg='#0C2955'
-      // bg='white'
+      // bg='#0C2955'
+      bg='white'
       boxShadow='0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12)'
     >
       <Stack
@@ -76,9 +76,14 @@ export const Header = () => {
       >
         <Stack>
           <Image
-            src='./logo6.png'
-            w='180px'
-            h='70px'
+            // src='./logo89.png'
+            // src='./logo99.png'
+            // src='./Apple.png'
+            // src='./Aaa-removebg-preview.png'
+            // src='./Aaa4.png'
+            src='./last.png'
+            w='220px'
+            h='60px'
             alt='Diploma icon'
           ></Image>
         </Stack>
@@ -108,7 +113,7 @@ export const Header = () => {
                 onClick={() => setCurrentTab(tab)}
                 py='6px'
                 px={'10px'}
-                color={'white'}
+                color={'black'}
               >
                 {tab}
               </Text>
