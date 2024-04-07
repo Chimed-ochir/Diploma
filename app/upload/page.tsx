@@ -6,6 +6,7 @@ import { BiShapeTriangle } from 'react-icons/bi';
 import { MdOutlineAccountBalanceWallet } from 'react-icons/md';
 import { FaUniversity } from 'react-icons/fa';
 import { IoIosDocument } from 'react-icons/io';
+import { useToast } from '@chakra-ui/react';
 import Web3 from 'web3';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/Account';
@@ -281,7 +282,7 @@ export default function Page() {
   const router = useRouter();
 
   const [wait, setWait] = useState(false);
-
+  const toast = useToast();
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
@@ -318,7 +319,7 @@ export default function Page() {
 
     const formData: FormData = new FormData();
     formData.append('file', file);
-
+    console.log('file------', file);
     // Replace 'projectId' and 'projectSecret' with actual values
     // const projectId: string = 'your_project_id';
     // const projectSecret: string = 'your_project_secret';
@@ -345,7 +346,7 @@ export default function Page() {
       }
 
       const data: any = await response.json();
-      console.log(data['Hash']); // Response data
+      console.log('data[Hash]', data); // Response data
       // return the CID to the addDocHash to store it in the Contract
       return data['Hash'];
     } catch (error) {
@@ -362,21 +363,30 @@ export default function Page() {
       setWait(true);
       // const ipfsInstance: any = IPFS;
       const CID = await uploadFileToIpfs();
-      const b = await uploadFileToIpfs();
       console.log('Cid', CID);
-      console.log('b', b);
       console.log('window', window);
+      console.log('window.userAddress', window.userAddress);
       console.log('hash', hash);
       if (hash) {
         const a = await window.contract.methods
           .addDocHash(hash, CID)
           .send({ from: window.userAddress });
+        if (a) {
+          toast({
+            title: 'Амжилттай.',
+            description: 'Амжилттай нэмлээ',
+            status: 'success',
+            duration: 5000,
+            isClosable: true,
+          });
+        }
+
         console.log('a', a);
       }
       setWait(false);
       // router.push('/confirmation');
     } catch (error: any) {
-      console.error('Error uploading file22:', error);
+      console.error('Error uploading file:', error);
       setErrorUpload(error.message);
       setInspect(false);
       setWait(false);
@@ -384,20 +394,14 @@ export default function Page() {
   };
 
   return (
-    <Stack h='calc(100vh - 100px)' bg='white'>
+    <Stack h='calc(100vh - 100px)'>
       <Stack
         p={4}
         spacing={4}
         w='80%'
         mx='auto'
         borderRadius={'28px'}
-        // style={{
-        //   // background: 'rgb(8,105,174)',
-        //   background:
-        //     'linear-gradient(260deg, rgba(8,105,174,1) 0%, rgba(12,41,85,1) 100%)',
-        // }}
-        // bg='#0c2955'
-        bg='#F6F4FF'
+        bg='#7126a2'
         mt='20px'
         color='black'
         fontSize={'24px'}
@@ -411,7 +415,7 @@ export default function Page() {
             pl='25px'
             textAlign={'center'}
             w='100%'
-            color='black'
+            color='white'
             spacing={4}
           >
             <Stack direction='row' alignItems='center'>

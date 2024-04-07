@@ -15,6 +15,10 @@ const AboutSection: React.FC = () => {
       as='section'
       id='about'
       className='about d-flex align-items-center text-light py-5'
+      h='100vh'
+      mt='60px'
+      fontSize={'20px'}
+      color='white'
     >
       <Stack alignItems='center' w='90%' mx='auto' direction='row'>
         <Image
@@ -24,8 +28,14 @@ const AboutSection: React.FC = () => {
           height={500}
           ml='-150px'
         />
-        <Box color='black'>
-          <Text className='main-header-section'>Бидний тухай</Text>
+        <Box>
+          <Text
+            className='main-header-section'
+            fontSize={'44px'}
+            fontWeight={'700'}
+          >
+            Бидний тухай
+          </Text>
           <Heading as='h1' size='xl' mt={4} mb={2}></Heading>
           <Text className='py-2 para-light'>
             Бид Блокчэйн технологийн хэрэглээ, давуу талыг олон нийтэд таниулах

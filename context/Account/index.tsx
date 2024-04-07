@@ -305,7 +305,7 @@ export const AuthProvider = ({ children }: React.PropsWithChildren) => {
         const accounts = await customWindow.ethereum.request({
           method: 'eth_requestAccounts',
         });
-
+        console.log('accounts---acc', accounts);
         const selectedAccount = accounts[0];
 
         if (!selectedAccount) {
@@ -327,7 +327,7 @@ export const AuthProvider = ({ children }: React.PropsWithChildren) => {
           customWindow.userAddress ?? ''
         ); // Use optional chaining or a fallback value
         // window.location.reload();
-        customWindow.location.reload();
+        // customWindow.location.reload();
       } catch (error) {
         console.error(error);
         // Handle error, perhaps show a message to the user

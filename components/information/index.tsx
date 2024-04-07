@@ -13,6 +13,8 @@ interface InformationCardProps {
   heading: string;
   text: string;
 }
+import { GiDiploma } from 'react-icons/gi';
+import { FaSchool } from 'react-icons/fa';
 
 const InformationCard: React.FC<InformationCardProps> = ({
   icon,
@@ -22,15 +24,21 @@ const InformationCard: React.FC<InformationCardProps> = ({
   return (
     <Box
       w={'33.3%'}
-      borderWidth='1px'
-      borderRadius='lg'
+      borderRadius='28px'
       overflow='hidden'
       m={4}
       p={5}
       textAlign='center'
-      // bg='gray.700'
-      bg='white'
-      boxShadow='xl'
+      bg='#7126a2'
+      fontWeight={'600'}
+      boxShadow='0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12)'
+      transition='box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1)'
+      color={'white'}
+      _hover={{
+        boxShadow:
+          'rgba(0, 0, 0, 0.2) 0px 11px 15px -7px, rgba(0, 0, 0, 0.14) 0px 24px 38px 3px, rgba(0, 0, 0, 0.12) 0px 9px 46px 8px',
+        transition: 'box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1)',
+      }}
     >
       <Image src={icon} alt={heading} width={150} height={150} mx={'auto'} />
       <Heading as='h4' size='md' mt={4}>
@@ -45,13 +53,20 @@ const InformationCard: React.FC<InformationCardProps> = ({
 
 const InformationSection: React.FC = () => {
   return (
-    <Box as='section'>
-      <Container maxW='container.xl'>
+    <Box
+      as='section'
+      // h='100vh'
+      color='white'
+      overflow={'hidden'}
+      borderBottom={'1px solid white'}
+      pb={'20px'}
+    >
+      <Container maxW='container.xl' mt='40px' w='80%'>
         <Stack justifyContent='center' direction='row'>
           <InformationCard
             icon='./undraw_investment_data_re_sh9x.svg'
             heading='Бага зардал'
-            text='Бага зардал'
+            text='Хамгийн бага зардлаар хаанаас баталгаажуулна'
           />
           <InformationCard
             icon='./undraw_time_management_re_tk5w.svg'
@@ -63,6 +78,44 @@ const InformationSection: React.FC = () => {
             heading='Найдвартай'
             text='Блокчейн технологиор 100% аюулгүй, ил тод үйл ажиллагаа явуулна.'
           />
+        </Stack>
+        <Stack direction='row' mt='60px'>
+          <Stack fontSize={'28px'} fontWeight={'700'} w='60%'>
+            <Stack
+              fontSize={'44px'}
+              fontWeight={'700'}
+              spacing={8}
+              alignItems={'center'}
+              justifyContent={'center'}
+              textAlign='center'
+            >
+              <Text>Нийт баталгаажсан дипломны тоо</Text>
+              <Stack direction='row'>
+                <Text fontSize={'54px'} h='60px'>
+                  599
+                </Text>
+                <GiDiploma size={'90px'} />
+              </Stack>
+            </Stack>
+            <Stack
+              fontSize={'44px'}
+              fontWeight={'700'}
+              spacing={8}
+              alignItems={'center'}
+              justifyContent={'center'}
+              textAlign={'center'}
+            >
+              <Text>Хамтрагч сургуулиудын тоо</Text>
+              <Stack direction='row'>
+                <Text fontSize={'54px'} h='60px'>
+                  17
+                </Text>
+                <FaSchool size={'90px'} />
+              </Stack>
+            </Stack>
+          </Stack>
+
+          <Image src='./aAaA.png' w='50%' h='50%' alt='Diploma icon'></Image>
         </Stack>
       </Container>
     </Box>

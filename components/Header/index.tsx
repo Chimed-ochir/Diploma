@@ -60,9 +60,9 @@ export const Header = () => {
   return (
     <Stack
       w='100%'
-      // bg='#0C2955'
-      bg='white'
-      boxShadow='0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12)'
+      style={{
+        background: `linear-gradient(260deg, rgba(148,13,186,1) 0%, rgba(1,5,30,1) 41%, rgba(1,5,30,1) 59%, rgba(148,13,186,1) 100%)`,
+      }}
     >
       <Stack
         direction={'row'}
@@ -71,17 +71,10 @@ export const Header = () => {
         alignItems={'center'}
         mx='auto'
         justifyContent={'space-between'}
-
-        // justifyContent={'space-between'}
       >
         <Stack>
           <Image
-            // src='./logo89.png'
-            // src='./logo99.png'
-            // src='./Apple.png'
-            // src='./Aaa-removebg-preview.png'
-            // src='./Aaa4.png'
-            src='./last.png'
+            src='./myLogo.png'
             w='220px'
             h='60px'
             alt='Diploma icon'
@@ -103,7 +96,7 @@ export const Header = () => {
               <Text
                 borderBottom={
                   currentTab === tab
-                    ? '2px solid #2E68FF'
+                    ? '2px solid white'
                     : '2px solid transparent'
                 }
                 cursor='pointer'
@@ -113,7 +106,7 @@ export const Header = () => {
                 onClick={() => setCurrentTab(tab)}
                 py='6px'
                 px={'10px'}
-                color={'black'}
+                color={'white'}
               >
                 {tab}
               </Text>

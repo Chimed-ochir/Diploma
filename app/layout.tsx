@@ -28,9 +28,9 @@ export default function RootLayout({
         <ChakraProvider>
           <AuthProvider>
             <Stack
-              // style={{
-              //   background: `radial-gradient(circle, rgba(15,80,138,1) 19%, rgba(10,72,129,1) 38%, rgba(1,5,30,1) 100%)`,
-              // }}
+              style={{
+                background: `radial-gradient(circle, rgba(148,13,186,1) 1%, rgba(1,5,30,1) 100%)`,
+              }}
               bg='white'
               gap='0'
             >
@@ -38,18 +38,6 @@ export default function RootLayout({
                 <Header />
               </Stack>
 
-              {/* <Box w='100vw' h='100vh'>
-                <video
-                  autoPlay
-                  muted
-                  loop
-                  id='myVideo'
-                  controls={false}
-                  style={{ width: '100%', height: '100%' }}
-                >
-                  <source src='./video5.mp4' type='video/mp4' />
-                </video>{' '}
-              </Box> */}
               <Stack>{children}</Stack>
               <Footer />
             </Stack>

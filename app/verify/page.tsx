@@ -88,17 +88,12 @@ export default function Page() {
   };
 
   return (
-    <Stack h='calc(100vh - 100px)' w='80%' mx='auto' mt='20px'>
+    <Stack w='80%' mx='auto' mt='20px'>
       <Stack
         textColor='black'
         borderRadius={'28px'}
         minHeight={'300px'}
-        // style={{
-        //   // background: 'rgb(8,105,174)',
-        //   background:
-        //     'linear-gradient(260deg, rgba(8,105,174,1) 0%, rgba(12,41,85,1) 100%)',
-        // }}
-        bg='#F6F4FF'
+        bg='#7126a2'
         justifyContent={'space-evenly'}
         alignItems={'center'}
         py='20px'

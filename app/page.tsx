@@ -8,83 +8,34 @@ export default function Home() {
   const router = useRouter();
   return (
     <Stack
-      bg='white'
-      // bg='#ebebeb'
-      // style={{
-      //   background: `radial-gradient(circle, rgba(15,80,138,1) 19%, rgba(10,72,129,1) 38%, rgba(1,5,30,1) 100%)`,
-      //   // backgroundImage: './aa.png',
-      // }}
+    // bg='white'
+    // bg='#ebebeb'
     >
-      {/* <Box w='100vw' h='100vh'>
-        <video
-          autoPlay
-          muted
-          loop
-          id='myVideo'
-          controls={false}
-          style={{ width: '100%', height: '100%' }}
-        >
-          <source src='./video5.mp4' type='video/mp4' />
-        </video>{' '}
-      </Box> */}
       <Stack
         h='calc(100vh - 100px)'
         fontSize={'64px'}
         w='100%'
         alignItems={'center'}
         direction={'row'}
-        // position='absolute'
+        style={{
+          backgroundImage: 'url(./agame.jpeg)', // Corrected
+          backgroundSize: 'cover', // Optional: Adjust as needed
+          backgroundPosition: 'center', // Optional: Adjust as needed
+        }}
       >
-        <Stack w='50%'>
-          <Image
-            src='./ABAA.png'
-            alt='graduate'
-            width={'100%'}
-            // borderRadius={'50%'}
-          />
-        </Stack>
-        <Stack
-          w='40%'
-          mt='-50px'
-          position={'absolute'}
-          left='300px'
-          top='290px'
-        >
-          {/* <Stack>
-         
-        </Stack> */}
-
-          <Stack w='100%' textAlign={'center'} alignItems={'center'}>
-            <Image
-              src='./ablock.png'
-              alt='graduate'
-              w='300px'
-              height={'90%'}
-              // borderRadius={'50%'}
-            />
-          </Stack>
-        </Stack>
-        <Stack w='50%' mt='-100px'>
-          {/* <Stack>
-         
-        </Stack> */}
+        <Stack w='50%' mt='-400px'>
           <Stack w='100%' textAlign={'center'}>
-            <Text fontWeight='600' color='black' fontSize={'44'}>
+            <Text fontWeight='600' color='#a915cb' fontSize={'44'}>
               Блокчэйнд Баталгаажсан{' '}
             </Text>
-            <Text fontWeight='600' color='black' fontSize={'64'}>
+            <Text fontWeight='600' color='white' fontSize={'64'}>
               {' '}
               Цахим Диплом
             </Text>{' '}
-            {/* <Text color='black' fontSize={'24px'} w='60%'>
-            {' '}
-            DIPLOMA.mn платформ нь таны үйл ажиллагаанд үр ашиг, аюулгүй байдлыг
-            бий болгох зорилготой платформ юм.
-          </Text>{' '} */}
           </Stack>
           <Button
             color='white'
-            bg='#2E68FF'
+            bg='#a915cb'
             height={'54px'}
             w='200px'
             mx='auto'
@@ -96,7 +47,7 @@ export default function Home() {
         </Stack>
       </Stack>
       <InformationSection />
-      <AboutSection />
+      {/* <AboutSection /> */}
     </Stack>
   );
 }
