@@ -88,7 +88,7 @@ export default function Page() {
   };
 
   return (
-    <Stack w='80%' mx='auto' mt='20px'>
+    <Stack w='80%' mx='auto' mt='20px' h='calc(100vh - 100px)'>
       <Stack
         textColor='black'
         borderRadius={'28px'}
