@@ -26,7 +26,7 @@ export default function Page() {
         const add = await window.contract.methods
           .add_Exporter(metaAddress, info)
           .send({ from: window.localStorage.getItem('userAddress') });
-        setError('Экспортлогчийг блокчэйнд нэмсэн');
+        setError('Админыг блокчэйнд нэмсэн');
         setLoading(false);
       } catch (error: any) {
         setError(error.message);
@@ -90,7 +90,7 @@ export default function Page() {
     >
       {view ? (
         <Stack
-          bg='#2E68FF'
+          bg='#7126a2'
           borderRadius={'28px'}
           py='20px'
           pl='25px'
@@ -124,7 +124,7 @@ export default function Page() {
         </Stack>
       ) : null}
       <Stack
-        bg='#2E68FF'
+        bg='#7126a2'
         borderRadius={'28px'}
         py='20px'
         pl='25px'

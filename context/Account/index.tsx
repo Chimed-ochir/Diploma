@@ -289,6 +289,8 @@ export const AuthProvider = ({ children }: React.PropsWithChildren) => {
   const [name, setName] = useState('n/a');
   const [view, setView] = useState(false);
   const [meta, setMeta] = useState(false);
+  const [load, setLoad] = useState(false);
+
   interface CustomWindow extends Window {
     ethereum?: any;
     userAddress?: string | null;
@@ -298,54 +300,75 @@ export const AuthProvider = ({ children }: React.PropsWithChildren) => {
   const customWindow: CustomWindow =
     typeof window !== 'undefined' ? window : ({} as CustomWindow);
 
+  let isConnecting = false;
+  console.log('-098', load);
   const connect = async () => {
-    console.log('Connecting');
-    if (typeof customWindow.ethereum !== 'undefined') {
-      try {
-        const accounts = await customWindow.ethereum.request({
-          method: 'eth_requestAccounts',
-        });
-        console.log('accounts---acc', accounts);
-        const selectedAccount = accounts[0];
+    if (isConnecting) return; // Prevent re-execution if already in progress
+    isConnecting = true;
 
-        if (!selectedAccount) {
-          throw new Error('Нэвтрэх хаяг сонгоогүй байна. 👍');
-        }
-        setView(true);
-        toast({
-          title: 'Амжилттай.',
-          description: 'МетаМаск хаяг амжилттай холбогдлоо',
-          status: 'success',
-          duration: 5000,
-          isClosable: true,
-        });
-        customWindow.userAddress = selectedAccount;
-        setAddress(selectedAccount);
-        console.log(selectedAccount);
-        customWindow.localStorage.setItem(
-          'userAddress',
-          customWindow.userAddress ?? ''
-        ); // Use optional chaining or a fallback value
-        // window.location.reload();
-        // customWindow.location.reload();
-      } catch (error) {
-        console.error(error);
-        // Handle error, perhaps show a message to the user
+    console.log('Connecting');
+    try {
+      const accounts = await customWindow.ethereum.request({
+        method: 'eth_requestAccounts',
+      });
+
+      console.log('accounts---acc', accounts);
+
+      const selectedAccount = accounts[0];
+      window.userAddress = selectedAccount;
+
+      if (!selectedAccount) {
+        throw new Error('Нэвтрэх хаяг сонгоогүй байна. 👍');
       }
-    } else {
-      // Handle case where window.ethereum is not available
-      // Disable buttons or show a warning
+
+      // Assume setView and setAddress are defined elsewhere
+      setView(true);
       toast({
-        title: 'МетаМаск extention байхгүй байна.',
-        description: 'МетаМаск суулгана уу.',
+        title: 'Амжилттай.',
+        description: 'МетаМаск хаяг амжилттай холбогдлоо',
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+      });
+
+      customWindow.userAddress = selectedAccount;
+      setAddress(selectedAccount); // Ensure setAddress is in scope
+      console.log(selectedAccount);
+
+      customWindow.localStorage.setItem(
+        'userAddress',
+        customWindow.userAddress ?? ''
+      );
+      setLoad(!load);
+    } catch (error: any) {
+      console.error('Error while connecting', error);
+      let message = '';
+
+      if (error === 'User rejected the request') {
+        message = 'Хэрэглэгч холбогдохоос татгалзлаа.';
+      } else if (
+        error.message ===
+        "Request of type 'wallet_requestPermissions' already pending for origin http://localhost:3000. Please wait."
+      ) {
+        message = 'Холбогдох хүсэлт аль хэдийн илгээсэн байна. Түр хүлээнэ үү';
+      } else {
+        message = 'МетаМаск хаягтай холбогдож чадсангүй.';
+      }
+
+      toast({
+        title: 'Алдаа',
+        description: message,
         status: 'error',
         duration: 5000,
         isClosable: true,
       });
+    } finally {
+      isConnecting = false; // Reset the flag for future connections
     }
   };
   function disconnect() {
     customWindow.userAddress = null;
+    window.userAddress = null;
     console.log('run disconnect');
     setAddress('n/a');
     setView(false);
@@ -378,12 +401,17 @@ export const AuthProvider = ({ children }: React.PropsWithChildren) => {
       console.error('Error fetching events:', error);
     }
   }
+  console.log('-----', window);
+  console.log('---111--', window.userAddress);
   useEffect(() => {
     if (typeof window !== 'undefined' && window.ethereum) {
-      console.log('if run');
+      console.log('if run', window);
       window.ethereum.on('accountsChanged', function () {
+        console.log('window---', window?.userAddress);
+        // if (window?.userAddress) {
         console.log('work use effect 1');
         connect();
+        // }
       });
     }
   }, []);
@@ -394,6 +422,7 @@ export const AuthProvider = ({ children }: React.PropsWithChildren) => {
       .count_Exporters()
       .call({ from: window.userAddress })
       .then((result: any) => {
+        console.log('===---999', result);
         setExplorer(result);
       });
 
@@ -407,6 +436,7 @@ export const AuthProvider = ({ children }: React.PropsWithChildren) => {
   }
   async function getExporterInfo() {
     const userAddress = window.localStorage.getItem('userAddress');
+    console.log('userAddress', userAddress);
     try {
       await window.contract.methods
         .getExporterInfo(userAddress)
@@ -425,6 +455,7 @@ export const AuthProvider = ({ children }: React.PropsWithChildren) => {
       const balance = await customWindow.web3.eth.getBalance(
         window.localStorage.getItem('userAddress')
       );
+      console.log('customWindow.web3.utils', customWindow.web3.utils);
       setBalance(customWindow.web3.utils.fromWei(balance).substr(0, 6));
     } catch (err) {
       setBalance('n/a');
@@ -464,11 +495,13 @@ export const AuthProvider = ({ children }: React.PropsWithChildren) => {
         case '0x2a':
           setChainId('Kovan Test Network');
           break;
+        case '0xaa36a7':
+          setChainId('Sepolia Test Network');
+          break;
         default:
           setChainId('Unknown ChainID');
       }
     } catch (error) {
-      console.error('Error getting chain ID:', error);
       setChainId('Unknown ChainID');
     }
   }
@@ -480,6 +513,7 @@ export const AuthProvider = ({ children }: React.PropsWithChildren) => {
       setView(userAddress ? true : false);
       if (customWindow.ethereum) {
         console.log('Onload');
+        console.log('customWindow.ethereum', customWindow.ethereum);
         (customWindow as any).web3 = new Web3(customWindow.ethereum);
         console.log('-------', customWindow.web3);
         (customWindow as any).contract = new (
@@ -507,7 +541,7 @@ export const AuthProvider = ({ children }: React.PropsWithChildren) => {
     return () => {
       window.removeEventListener('load', onLoad);
     };
-  }, []);
+  }, [load]);
 
   return (
     <AuthContext.Provider

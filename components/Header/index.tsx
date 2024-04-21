@@ -14,7 +14,9 @@ import { useEffect, useState } from 'react';
 export const Header = () => {
   const path = usePathname();
   const [currentTab, setCurrentTab] = useState('Home');
+  const [tabs1, setTabs] = useState(['Home', 'Verify']);
   const tabs = ['Home', 'Verify'];
+  const { connect, disconnect, address } = useAuth();
   const accounts = [
     '0x896715dc4eaf034785b3b5a1f7078478ac24e77f',
     '0xc48b5c6bfad52b536c523ad5fe2484dfd4fbde2b',
@@ -22,15 +24,33 @@ export const Header = () => {
     '0xdb7343fff975b98d64aa3c333e0b246ad71d175d',
   ];
   useEffect(() => {
+    console.log(
+      'typeof window',
+      typeof window,
+      window.localStorage.getItem('userAddress')
+    );
     if (
-      typeof window !== 'undefined' &&
-      window.localStorage.getItem('userAddress') ===
-        '0x896715dC4eAF034785B3b5a1f7078478ac24e77f'
+      typeof window != 'undefined' &&
+      window.localStorage.getItem('userAddress') ==
+        '0x896715dc4eaf034785b3b5a1f7078478ac24e77f'
     ) {
+      console.log('876543345678-----');
       tabs.push('Admin');
+
+      const isAdminTabPresent = tabs1.includes('Admin'); // Simplified check with includes()
+
+      if (!isAdminTabPresent) {
+        // If 'Admin' is not found, add it to tabs1
+        setTabs([...tabs1, 'Admin']);
+      }
+    } else {
+      if (tabs1.includes('Admin')) {
+        // Remove 'Admin' if it exists in tabs1
+        setTabs(tabs1.filter((tab) => tab !== 'Admin'));
+      }
     }
 
-    const matchingTab = tabs.find((tab) => {
+    const matchingTab = tabs1.find((tab) => {
       if (path === '') {
         return 'Home';
       } else {
@@ -43,17 +63,22 @@ export const Header = () => {
     if (matchingTab) {
       setCurrentTab(matchingTab);
     }
-  }, [path]);
-  const { connect, disconnect, address } = useAuth();
+  }, [path, address]);
+
+  console.log('tabs', tabs);
+  console.log('tabs11', tabs1);
   console.log('address', address);
   if (address !== 'n/a' && address && accounts.includes(address)) {
+    const TabPresent = tabs1.includes('Upload');
     // If address is truthy, add 'Upload' tab
-    tabs.push('Upload');
+    if (!TabPresent) {
+      setTabs([...tabs1, 'Upload']);
+    }
   } else {
     // If address is falsy, remove 'Upload' tab if it exists
-    const index = tabs.indexOf('Upload');
+    const index = tabs1.indexOf('Upload');
     if (index !== -1) {
-      tabs.splice(index, 1);
+      tabs1.splice(index, 1);
     }
   }
 
@@ -87,7 +112,7 @@ export const Header = () => {
           justifyContent={'space-around'}
           ml={'40px'}
         >
-          {tabs.map((tab) => (
+          {tabs1.map((tab) => (
             <Link
               href={`/${tab === 'Home' ? '/' : tab.toLowerCase()}`}
               key={tab}

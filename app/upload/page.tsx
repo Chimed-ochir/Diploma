@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Button, Text, Stack } from '@chakra-ui/react';
 import { PiFolderSimpleUserDuotone } from 'react-icons/pi';
 import { BiShapeTriangle } from 'react-icons/bi';
@@ -11,253 +11,11 @@ import Web3 from 'web3';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/Account';
 import MetaMaskAlert from '@/components/MetaMask';
-interface ContractType {
-  address: string;
-  network: string;
-  explore: string;
-  abi: AbiItem[];
-}
-
-interface AbiItem {
-  inputs: AbiInput[];
-  name?: string;
-  outputs?: AbiOutput[];
-  stateMutability?: string;
-  type: string;
-  anonymous?: boolean;
-}
-
-interface AbiInput {
-  internalType: string;
-  name: string;
-  type: string;
-  indexed?: boolean;
-}
-
-interface AbiOutput {
-  internalType: string;
-  name: string;
-  type: string;
-}
-
-const CONTRACT: ContractType = {
-  address: '0x31565eAF43Cb0eEda62Ab7AaA301a246887b3994',
-  network:
-    'https://eth-sepolia.g.alchemy.com/v2/XLehiBbmblNGQxHugJ5wAhoBK7t2p464',
-  explore: 'https://sepolia.etherscan.io/',
-  abi: [
-    {
-      inputs: [
-        {
-          internalType: 'address',
-          name: '_add',
-          type: 'address',
-        },
-        {
-          internalType: 'string',
-          name: '_info',
-          type: 'string',
-        },
-      ],
-      name: 'add_Exporter',
-      outputs: [],
-      stateMutability: 'nonpayable',
-      type: 'function',
-    },
-    {
-      inputs: [
-        {
-          internalType: 'bytes32',
-          name: 'hash',
-          type: 'bytes32',
-        },
-        {
-          internalType: 'string',
-          name: '_ipfs',
-          type: 'string',
-        },
-      ],
-      name: 'addDocHash',
-      outputs: [],
-      stateMutability: 'nonpayable',
-      type: 'function',
-    },
-    {
-      inputs: [
-        {
-          internalType: 'address',
-          name: '_add',
-          type: 'address',
-        },
-        {
-          internalType: 'string',
-          name: '_newInfo',
-          type: 'string',
-        },
-      ],
-      name: 'alter_Exporter',
-      outputs: [],
-      stateMutability: 'nonpayable',
-      type: 'function',
-    },
-    {
-      inputs: [],
-      stateMutability: 'nonpayable',
-      type: 'constructor',
-    },
-    {
-      anonymous: false,
-      inputs: [
-        {
-          indexed: true,
-          internalType: 'address',
-          name: '_exporter',
-          type: 'address',
-        },
-        {
-          indexed: false,
-          internalType: 'string',
-          name: '_ipfsHash',
-          type: 'string',
-        },
-      ],
-      name: 'addHash',
-      type: 'event',
-    },
-    {
-      inputs: [
-        {
-          internalType: 'address',
-          name: '_newOwner',
-          type: 'address',
-        },
-      ],
-      name: 'changeOwner',
-      outputs: [],
-      stateMutability: 'nonpayable',
-      type: 'function',
-    },
-    {
-      inputs: [
-        {
-          internalType: 'address',
-          name: '_add',
-          type: 'address',
-        },
-      ],
-      name: 'delete_Exporter',
-      outputs: [],
-      stateMutability: 'nonpayable',
-      type: 'function',
-    },
-    {
-      inputs: [
-        {
-          internalType: 'bytes32',
-          name: '_hash',
-          type: 'bytes32',
-        },
-      ],
-      name: 'deleteHash',
-      outputs: [],
-      stateMutability: 'nonpayable',
-      type: 'function',
-    },
-    {
-      inputs: [],
-      name: 'count_Exporters',
-      outputs: [
-        {
-          internalType: 'uint16',
-          name: '',
-          type: 'uint16',
-        },
-      ],
-      stateMutability: 'view',
-      type: 'function',
-    },
-    {
-      inputs: [],
-      name: 'count_hashes',
-      outputs: [
-        {
-          internalType: 'uint16',
-          name: '',
-          type: 'uint16',
-        },
-      ],
-      stateMutability: 'view',
-      type: 'function',
-    },
-    {
-      inputs: [
-        {
-          internalType: 'bytes32',
-          name: '_hash',
-          type: 'bytes32',
-        },
-      ],
-      name: 'findDocHash',
-      outputs: [
-        {
-          internalType: 'uint256',
-          name: '',
-          type: 'uint256',
-        },
-        {
-          internalType: 'uint256',
-          name: '',
-          type: 'uint256',
-        },
-        {
-          internalType: 'string',
-          name: '',
-          type: 'string',
-        },
-        {
-          internalType: 'string',
-          name: '',
-          type: 'string',
-        },
-      ],
-      stateMutability: 'view',
-      type: 'function',
-    },
-    {
-      inputs: [
-        {
-          internalType: 'address',
-          name: '_add',
-          type: 'address',
-        },
-      ],
-      name: 'getExporterInfo',
-      outputs: [
-        {
-          internalType: 'string',
-          name: '',
-          type: 'string',
-        },
-      ],
-      stateMutability: 'view',
-      type: 'function',
-    },
-    {
-      inputs: [],
-      name: 'owner',
-      outputs: [
-        {
-          internalType: 'address',
-          name: '',
-          type: 'address',
-        },
-      ],
-      stateMutability: 'view',
-      type: 'function',
-    },
-  ],
-};
+import { FaGasPump } from 'react-icons/fa';
+import { SiBlockchaindotcom } from 'react-icons/si';
 const projectId = '28LuNAotbXzcvtpOcE9F8ayKOeP';
+import { FaHashtag } from 'react-icons/fa';
+
 // const projectId = '5289d049085c47688271917af6cc1f4a';
 
 // const projectId = '5289d049085c47688271917af6cc1f4a';
@@ -271,19 +29,47 @@ declare global {
     contract?: any;
   }
 }
-
+interface ResultType {
+  transactionHash: string | null;
+  hashedfile: string | null;
+  to: string | null;
+  blockNumber: string | null;
+  blockHash: string | null;
+  chainID: string | null;
+  gasUsed: string | null;
+}
 export default function Page() {
   const [uploadValue, setUploadValue] = useState<File | null>(null);
   const [inspect, setInspect] = useState<boolean | null>(null);
-
-  const [hash, setHash] = useState<string>('');
-  const [errorUpload, setErrorUpload] = useState<string>('');
-  const { chainId, address, view, meta, name, balance } = useAuth();
-  const router = useRouter();
-
-  const [wait, setWait] = useState(false);
   const toast = useToast();
+  const [hash, setHash] = useState<string>('');
+  const [value, setValue] = useState<ResultType>();
+  const [errorUpload, setErrorUpload] = useState<string>('');
+  const { chainId, address, view, meta, name, count, balance } = useAuth();
+  const router = useRouter();
+  const inputRef = useRef<HTMLInputElement>(null);
+  const resetInput = () => {
+    if (inputRef.current) {
+      // Resetting the value by setting it to an empty string
+
+      setErrorUpload('');
+      setInspect(null);
+      inputRef.current.value = '';
+      setUploadValue(null); // Clear state
+    }
+  };
+  const [wait, setWait] = useState(false);
+  const truncateAddress = (address: string | null) => {
+    if (!address) return;
+    return `${address.substr(0, 7)}...${address.substr(
+      address.length - 8,
+      address.length
+    )}`;
+  };
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setErrorUpload('');
+    setInspect(null);
+    setWait(false);
     const file = event.target.files?.[0];
     if (file) {
       setUploadValue(file);
@@ -309,11 +95,13 @@ export default function Page() {
       'doc-file'
     ) as HTMLInputElement; // Explicitly cast to HTMLInputElement
     if (!fileInput) {
-      throw new Error('File input element not found');
+      setErrorUpload('Дипломын файл оруулна уу.');
+      throw new Error('No file selected');
     }
 
     const file: File | null = fileInput.files ? fileInput.files[0] : null;
     if (!file) {
+      setErrorUpload('Файл оруулна уу.');
       throw new Error('No file selected');
     }
 
@@ -358,20 +146,25 @@ export default function Page() {
   const handleSendHash = async () => {
     try {
       if (!uploadValue) {
-        throw new Error('Please select a file.');
+        setErrorUpload('Дипломын файл оруулна уу.');
+        return;
       }
       setWait(true);
+      setErrorUpload('');
       // const ipfsInstance: any = IPFS;
       const CID = await uploadFileToIpfs();
       console.log('Cid', CID);
       console.log('window', window);
       console.log('window.userAddress', window.userAddress);
+      console.log('Address', address);
       console.log('hash', hash);
       if (hash) {
         const a = await window.contract.methods
           .addDocHash(hash, CID)
-          .send({ from: window.userAddress });
+          .send({ from: address });
         if (a) {
+          setValue(a);
+          resetInput();
           toast({
             title: 'Амжилттай.',
             description: 'Амжилттай нэмлээ',
@@ -387,7 +180,7 @@ export default function Page() {
       // router.push('/confirmation');
     } catch (error: any) {
       console.error('Error uploading file:', error);
-      setErrorUpload(error.message);
+      setErrorUpload('Байршуулахад алдаа гарлаа.');
       setInspect(false);
       setWait(false);
     }
@@ -459,6 +252,7 @@ export default function Page() {
         >
           <label htmlFor='file-upload' style={{ position: 'relative' }}>
             <input
+              ref={inputRef}
               onChange={handleFileChange}
               id='doc-file'
               type='file'
@@ -471,8 +265,8 @@ export default function Page() {
               loading . . .
             </Text>
           ) : errorUpload ? (
-            <Text textAlign='center' color='black' fontSize='lg'>
-              Error Upload . . .
+            <Text textAlign='center' color='red' fontSize='lg'>
+              {errorUpload}
             </Text>
           ) : inspect ? (
             <Text textAlign='center' color='black' fontSize='lg'>
@@ -493,10 +287,63 @@ export default function Page() {
           mx='auto'
           fontSize={'24px'}
           height={'54px'}
+          isLoading={wait}
         >
           Upload
         </Button>
       </Stack>
+      {value ? (
+        <Stack
+          p={4}
+          spacing={4}
+          w='80%'
+          mx='auto'
+          borderRadius={'28px'}
+          bg='#7126a2'
+          mt='20px'
+          color='white'
+          fontSize={'24px'}
+          shadow={'5px'}
+          mb='10px'
+        >
+          <Stack
+            onClick={() => {
+              if (value?.transactionHash) {
+                window.open(
+                  `https://sepolia.etherscan.io//tx/${value.transactionHash}`,
+                  '_blank' // This tells the browser to open in a new tab
+                );
+              }
+            }}
+            direction={'row'}
+            style={{ cursor: 'pointer' }}
+            alignItems={'center'} // Optional: Change cursor to indicate it's clickable
+          >
+            <BiShapeTriangle color='white' size={28} />
+            <Text>{truncateAddress(value?.transactionHash)}</Text>
+          </Stack>
+          <Stack direction={'row'} alignItems={'center'}>
+            <FaHashtag color='white' size={28} />
+            <Text>{truncateAddress(value?.blockHash)}</Text>
+          </Stack>
+          <Stack direction={'row'} alignItems={'center'}>
+            <SiBlockchaindotcom color='white' size={28} />
+            <Text>{value?.blockNumber}</Text>
+          </Stack>
+          <Stack direction={'row'} alignItems={'center'}>
+            <BiShapeTriangle color='white' size={28} />
+            <Text>{chainId}</Text>
+          </Stack>
+          <Stack direction={'row'} alignItems={'center'}>
+            <FaGasPump color='white' size={28} />
+            <Text>{value?.gasUsed} Gwei</Text>
+          </Stack>
+          <Stack direction={'row'} alignItems={'center'}>
+            <BiShapeTriangle color='white' size={28} />
+            <Text>{value?.to}</Text>
+          </Stack>
+        </Stack>
+      ) : null}
     </Stack>
   );
 }
