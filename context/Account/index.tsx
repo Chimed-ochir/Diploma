@@ -1,5 +1,12 @@
 'use client';
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, {
+  Dispatch,
+  SetStateAction,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 
 import { redirect, usePathname, useRouter } from 'next/navigation';
 import { useToast } from '@chakra-ui/react';
@@ -255,6 +262,7 @@ const CONTRACT: ContractType = {
 interface AuthProviderValueType {
   disconnect: () => void;
   connect: () => void;
+  fullPath: (query?: { [key: string]: any }, locale?: string) => string;
   address: string | null;
   count: number | null;
   explorer: number | null;
@@ -263,6 +271,8 @@ interface AuthProviderValueType {
   chainId: string;
   view: boolean;
   meta: boolean;
+  load: boolean;
+  setLoad: Dispatch<SetStateAction<boolean>>;
 }
 
 function parseJwt(token: string) {
@@ -401,8 +411,7 @@ export const AuthProvider = ({ children }: React.PropsWithChildren) => {
       console.error('Error fetching events:', error);
     }
   }
-  console.log('-----', window);
-  console.log('---111--', window.userAddress);
+
   useEffect(() => {
     if (typeof window !== 'undefined' && window.ethereum) {
       console.log('if run', window);
@@ -542,12 +551,27 @@ export const AuthProvider = ({ children }: React.PropsWithChildren) => {
       window.removeEventListener('load', onLoad);
     };
   }, [load]);
+  const fullPath = (query?: { [key: string]: any }, locale?: string) => {
+    let fullPath;
 
+    const cleanPath = pathname.replace(/^\/[a-z]{2}(\/|$)/, '');
+    if (pathname === '/en' || pathname === '/mn') {
+      fullPath = `/${locale || 'en'}`; // Only prepend locale
+    } else {
+      fullPath = `/${locale || 'en'}/` + cleanPath; // Append locale to pathname
+    }
+    if (query) {
+      const queryParams = new URLSearchParams(query);
+      fullPath += '?' + queryParams.toString();
+    }
+    return fullPath;
+  };
   return (
     <AuthContext.Provider
       value={{
         connect,
         disconnect,
+        fullPath,
         explorer,
         count,
         address,
@@ -556,6 +580,8 @@ export const AuthProvider = ({ children }: React.PropsWithChildren) => {
         chainId,
         view,
         meta,
+        setLoad,
+        load,
       }}
     >
       {children}

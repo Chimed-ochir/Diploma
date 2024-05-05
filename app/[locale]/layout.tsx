@@ -5,6 +5,7 @@ import { Box, ChakraProvider, Stack } from '@chakra-ui/react';
 import { Header } from '@/components/Header';
 import { AuthProvider } from '@/context/Account';
 import { Footer } from '@/components/Footer';
+import { useTranslations } from 'next-intl';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -19,11 +20,14 @@ export const metadata: Metadata = {
 // Assign the custom window object
 export default function RootLayout({
   children,
+  params: { locale },
 }: Readonly<{
   children: React.ReactNode;
+  params: { locale: string };
 }>) {
+  const t = useTranslations('Home');
   return (
-    <html lang='en'>
+    <html lang={locale}>
       <body className={poppins.className}>
         <ChakraProvider>
           <AuthProvider>
@@ -35,7 +39,7 @@ export default function RootLayout({
               gap='0'
             >
               <Stack bg='white' zIndex={'1'}>
-                <Header />
+                <Header locale={locale} />
               </Stack>
 
               <Stack>{children}</Stack>

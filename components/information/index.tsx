@@ -51,7 +51,25 @@ const InformationCard: React.FC<InformationCardProps> = ({
   );
 };
 
-const InformationSection: React.FC = () => {
+export default function InformationSection({
+  card1,
+  card2,
+  card3,
+  card11,
+  card22,
+  card33,
+  info,
+  info1,
+}: {
+  card11: string;
+  card22: string;
+  card33: string;
+  card1: string;
+  card2: string;
+  card3: string;
+  info: string;
+  info1: string;
+}) {
   return (
     <Box
       as='section'
@@ -65,18 +83,18 @@ const InformationSection: React.FC = () => {
         <Stack justifyContent='center' direction='row'>
           <InformationCard
             icon='./undraw_investment_data_re_sh9x.svg'
-            heading='Бага зардал'
-            text='Хамгийн бага зардлаар хаанаас баталгаажуулна'
+            heading={card11}
+            text={card1}
           />
           <InformationCard
             icon='./undraw_time_management_re_tk5w.svg'
-            heading='Хурдан ажиллагаа'
-            text='Гэрчилгээг баталгаажуулахад ердөө 1 секунд зарцуулагдана.'
+            heading={card22}
+            text={card2}
           />
           <InformationCard
             icon='./securefiles.svg'
-            heading='Найдвартай'
-            text='Блокчейн технологиор 100% аюулгүй, ил тод үйл ажиллагаа явуулна.'
+            heading={card33}
+            text={card3}
           />
         </Stack>
         <Stack direction='row' mt='60px'>
@@ -89,7 +107,7 @@ const InformationSection: React.FC = () => {
               justifyContent={'center'}
               textAlign='center'
             >
-              <Text>Нийт баталгаажсан дипломны тоо</Text>
+              <Text>{info}</Text>
               <Stack direction='row'>
                 <Text fontSize={'54px'} h='60px'>
                   599
@@ -105,7 +123,7 @@ const InformationSection: React.FC = () => {
               justifyContent={'center'}
               textAlign={'center'}
             >
-              <Text>Хамтрагч сургуулиудын тоо</Text>
+              <Text>{info1}</Text>
               <Stack direction='row'>
                 <Text fontSize={'54px'} h='60px'>
                   17
@@ -120,6 +138,4 @@ const InformationSection: React.FC = () => {
       </Container>
     </Box>
   );
-};
-
-export default InformationSection;
+}

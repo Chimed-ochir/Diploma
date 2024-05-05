@@ -44,7 +44,7 @@ export const Footer = () => {
         >
           <Stack>
             <Image
-              src='./myLogo.png'
+              src='/myLogo.png'
               w='220px'
               h='60px'
               alt='Diploma icon'

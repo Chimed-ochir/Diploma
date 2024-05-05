@@ -1,0 +1,26 @@
+{
+  "Home": {
+    "button": "Verify",
+    "verifyText": " Please submit your diploma file for verification?",
+    "success": "Diploma verification is successful 😊",
+    "error": "Diploma has not been verified. 😒",
+    "diploma": "Electronic Diploma",
+    "diploma1": "Verified on Blockchain",
+    "info": "Total number of certified diplomas",
+    "info1": "Number of partner schools",
+    "card1": "Where to get guaranteed at the lowest cost",
+    "card11": "Low cost",
+    "card2": "It only takes 1 second to verify the certificate.",
+    "card22": "Fast operation",
+    "card3": "100% secure and transparent operations will be conducted with blockchain technology.",
+    "card33": "Hopeful"
+  },
+  "Upload": {
+    "upload": "Upload",
+    "hash1": "Document Hashed 😎",
+    "hashError": "Invalid Hash",
+    "input": "Submit thesis file.",
+    "uploadError": "There was an error uploading.",
+    "loading": "Loading..."
+  }
+}

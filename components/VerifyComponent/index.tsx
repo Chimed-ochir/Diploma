@@ -7,7 +7,17 @@ import { useState } from 'react';
 import { IoTime } from 'react-icons/io5';
 import { FaCube, FaUniversity } from 'react-icons/fa';
 
-export default function Page() {
+export default function VerifyComponent({
+  title,
+  verifyText,
+  success,
+  error,
+}: {
+  title: string;
+  verifyText: string;
+  success: string;
+  error: string;
+}) {
   const { address } = useAuth();
   const [verifyValue, setVerifyValue] = useState<string | null>(null);
   const [inspect, setInspect] = useState<boolean | null>(null);
@@ -15,7 +25,7 @@ export default function Page() {
   const [school, setSchool] = useState<number | string>('n/a');
   const [block, setBlock] = useState<number | string>('n/a');
   const [time, setTime] = useState<Date | string>(new Date()); // Set initial state to the current date
-
+  console.log('title', title);
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -99,6 +109,7 @@ export default function Page() {
         py='20px'
         fontSize={'24px'}
       >
+        <Text color={'white'}>{verifyText}</Text>
         <Stack
           borderRadius={'28px'}
           py='20px'
@@ -130,7 +141,7 @@ export default function Page() {
           fontSize={'24px'}
           height={'54px'}
         >
-          Шалгах
+          {title}
         </Button>
         {inspect !== null && (
           <Stack
@@ -144,9 +155,7 @@ export default function Page() {
             border='1px solid #BCADFF'
           >
             <Text color={inspect ? 'green' : 'red'}>
-              {inspect
-                ? 'Диплом баталгаажуулалт амжилттай. 😊'
-                : 'Диплом баталгаажаагүй байна.'}
+              {inspect ? success : error}
             </Text>
             <Stack direction={'row'} alignItems={'center'}>
               <BsBookmarkCheckFill />

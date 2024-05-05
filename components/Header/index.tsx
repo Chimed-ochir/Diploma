@@ -7,22 +7,24 @@ import {
   Image,
   Button,
 } from '@chakra-ui/react';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import LanguageSwitcher from '../LanguageSwitcher';
 
-export const Header = () => {
+export const Header = ({ locale }: { locale: string }) => {
   const path = usePathname();
   const [currentTab, setCurrentTab] = useState('Home');
   const [tabs1, setTabs] = useState(['Home', 'Verify']);
   const tabs = ['Home', 'Verify'];
   const { connect, disconnect, address } = useAuth();
-  const accounts = [
-    '0x896715dc4eaf034785b3b5a1f7078478ac24e77f',
-    '0xc48b5c6bfad52b536c523ad5fe2484dfd4fbde2b',
-    '0x44aa9b64f2ddd1be45c2fad3cebc6f212750739f',
-    '0xdb7343fff975b98d64aa3c333e0b246ad71d175d',
-  ];
+  // const accounts = [
+  //   '0x896715dc4eaf034785b3b5a1f7078478ac24e77f',
+  //   '0xc48b5c6bfad52b536c523ad5fe2484dfd4fbde2b',
+  //   '0x44aa9b64f2ddd1be45c2fad3cebc6f212750739f',
+  //   '0xdb7343fff975b98d64aa3c333e0b246ad71d175d',
+  // ];
   useEffect(() => {
     console.log(
       'typeof window',
@@ -51,10 +53,10 @@ export const Header = () => {
     }
 
     const matchingTab = tabs1.find((tab) => {
-      if (path === '') {
+      if (path === `/${locale}`) {
         return 'Home';
       } else {
-        if (path === `/${tab.toLowerCase()}`) {
+        if (path === `/${locale}/${tab.toLowerCase()}`) {
           return tab;
         }
       }
@@ -65,10 +67,10 @@ export const Header = () => {
     }
   }, [path, address]);
 
-  console.log('tabs', tabs);
+  console.log('path', path);
   console.log('tabs11', tabs1);
-  console.log('address', address);
-  if (address !== 'n/a' && address && accounts.includes(address)) {
+  console.log('locale', locale);
+  if (address !== 'n/a' && address) {
     const TabPresent = tabs1.includes('Upload');
     // If address is truthy, add 'Upload' tab
     if (!TabPresent) {
@@ -81,6 +83,12 @@ export const Header = () => {
       tabs1.splice(index, 1);
     }
   }
+  const router = useRouter();
+  // Use a common translation file
+  // useEffect(() => {
+  //   path.includes;
+  // }, [path]);
+  console.log('-----currentTab------', currentTab);
 
   return (
     <Stack
@@ -99,7 +107,7 @@ export const Header = () => {
       >
         <Stack>
           <Image
-            src='./myLogo.png'
+            src='/myLogo.png'
             w='220px'
             h='60px'
             alt='Diploma icon'
@@ -114,7 +122,9 @@ export const Header = () => {
         >
           {tabs1.map((tab) => (
             <Link
-              href={`/${tab === 'Home' ? '/' : tab.toLowerCase()}`}
+              href={`/${
+                tab === 'Home' ? '' : `${locale}/${tab.toLowerCase()}`
+              }`}
               key={tab}
               passHref
             >
@@ -141,8 +151,10 @@ export const Header = () => {
         {address !== 'n/a' ? (
           <Button onClick={() => disconnect()}>Logout</Button>
         ) : (
-          <Button onClick={() => connect()}>Login</Button>
+          <Button onClick={() => connect()}>login</Button>
         )}
+
+        <LanguageSwitcher />
       </Stack>
     </Stack>
   );

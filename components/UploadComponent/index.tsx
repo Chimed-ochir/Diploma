@@ -15,6 +15,7 @@ import { FaGasPump } from 'react-icons/fa';
 import { SiBlockchaindotcom } from 'react-icons/si';
 const projectId = '28LuNAotbXzcvtpOcE9F8ayKOeP';
 import { FaHashtag } from 'react-icons/fa';
+import { SiIpfs } from 'react-icons/si';
 
 // const projectId = '5289d049085c47688271917af6cc1f4a';
 
@@ -38,15 +39,31 @@ interface ResultType {
   chainID: string | null;
   gasUsed: string | null;
 }
-export default function Page() {
+export default function UploadComponent({
+  upload,
+  hash1,
+  hashError,
+  input,
+  uploadError,
+  loading,
+}: {
+  upload: string;
+  hash1: string;
+  hashError: string;
+  input: string;
+  uploadError: string;
+  loading: string;
+}) {
   const [uploadValue, setUploadValue] = useState<File | null>(null);
   const [inspect, setInspect] = useState<boolean | null>(null);
   const toast = useToast();
   const [hash, setHash] = useState<string>('');
   const [value, setValue] = useState<ResultType>();
   const [errorUpload, setErrorUpload] = useState<string>('');
+  const [cidHash, setCidHash] = useState('');
   const { chainId, address, view, meta, name, count, balance } = useAuth();
   const router = useRouter();
+
   const inputRef = useRef<HTMLInputElement>(null);
   const resetInput = () => {
     if (inputRef.current) {
@@ -95,13 +112,13 @@ export default function Page() {
       'doc-file'
     ) as HTMLInputElement; // Explicitly cast to HTMLInputElement
     if (!fileInput) {
-      setErrorUpload('Дипломын файл оруулна уу.');
+      setErrorUpload(input);
       throw new Error('No file selected');
     }
 
     const file: File | null = fileInput.files ? fileInput.files[0] : null;
     if (!file) {
-      setErrorUpload('Файл оруулна уу.');
+      setErrorUpload(input);
       throw new Error('No file selected');
     }
 
@@ -146,13 +163,14 @@ export default function Page() {
   const handleSendHash = async () => {
     try {
       if (!uploadValue) {
-        setErrorUpload('Дипломын файл оруулна уу.');
+        setErrorUpload(input);
         return;
       }
       setWait(true);
       setErrorUpload('');
       // const ipfsInstance: any = IPFS;
       const CID = await uploadFileToIpfs();
+      setCidHash(CID);
       console.log('Cid', CID);
       console.log('window', window);
       console.log('window.userAddress', window.userAddress);
@@ -180,7 +198,7 @@ export default function Page() {
       // router.push('/confirmation');
     } catch (error: any) {
       console.error('Error uploading file:', error);
-      setErrorUpload('Байршуулахад алдаа гарлаа.');
+      setErrorUpload(uploadError);
       setInspect(false);
       setWait(false);
     }
@@ -262,7 +280,7 @@ export default function Page() {
           </label>
           {wait ? (
             <Text textAlign='center' color='black' fontSize='lg'>
-              loading . . .
+              {loading}
             </Text>
           ) : errorUpload ? (
             <Text textAlign='center' color='red' fontSize='lg'>
@@ -270,11 +288,11 @@ export default function Page() {
             </Text>
           ) : inspect ? (
             <Text textAlign='center' color='black' fontSize='lg'>
-              Document Hashed 😎
+              {hash1}
             </Text>
           ) : inspect === false ? (
             <Text textAlign='center' color='red' fontSize='lg'>
-              Document Hashed error!
+              {hashError}
             </Text>
           ) : null}
         </Stack>
@@ -289,7 +307,7 @@ export default function Page() {
           height={'54px'}
           isLoading={wait}
         >
-          Upload
+          {upload}
         </Button>
       </Stack>
       {value ? (
@@ -321,6 +339,22 @@ export default function Page() {
           >
             <BiShapeTriangle color='white' size={28} />
             <Text>{truncateAddress(value?.transactionHash)}</Text>
+          </Stack>
+          <Stack
+            onClick={() => {
+              if (cidHash) {
+                window.open(
+                  `https://ipfs.io/ipfs/${cidHash}`,
+                  '_blank' // This tells the browser to open in a new tab
+                );
+              }
+            }}
+            direction={'row'}
+            style={{ cursor: 'pointer' }}
+            alignItems={'center'} // Optional: Change cursor to indicate it's clickable
+          >
+            <SiIpfs color='white' size={28} />
+            <Text>{truncateAddress(cidHash)}</Text>
           </Stack>
           <Stack direction={'row'} alignItems={'center'}>
             <FaHashtag color='white' size={28} />

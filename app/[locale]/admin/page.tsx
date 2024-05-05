@@ -9,7 +9,8 @@ import { useAuth } from '@/context/Account';
 import { useState } from 'react';
 
 export default function Page() {
-  const { chainId, address, count, view, explorer, balance } = useAuth();
+  const { chainId, address, count, view, explorer, balance, setLoad, load } =
+    useAuth();
   const [loading, setLoading] = useState(false);
   const [loading2, setLoading2] = useState(false);
   const [loading3, setLoading3] = useState(false);
@@ -26,6 +27,7 @@ export default function Page() {
         const add = await window.contract.methods
           .add_Exporter(metaAddress, info)
           .send({ from: window.localStorage.getItem('userAddress') });
+        setLoad(!load);
         setError('Админыг блокчэйнд нэмсэн');
         setLoading(false);
       } catch (error: any) {
