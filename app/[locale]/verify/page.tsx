@@ -10,6 +10,10 @@ export default function Page() {
         verifyText={t('verifyText')}
         success={t('success')}
         error={t('error')}
+        hash1={t('hash1')}
+        hashError={t('hashError')}
+        loading={t('loading')}
+        verify={t('verify')}
       />
     </Stack>
   );

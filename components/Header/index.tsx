@@ -148,13 +148,15 @@ export const Header = ({ locale }: { locale: string }) => {
             </Link>
           ))}
         </Stack>
-        {address !== 'n/a' ? (
-          <Button onClick={() => disconnect()}>Logout</Button>
-        ) : (
-          <Button onClick={() => connect()}>login</Button>
-        )}
+        <Stack direction='row'>
+          {address !== 'n/a' ? (
+            <Button onClick={() => disconnect()}>Logout</Button>
+          ) : (
+            <Button onClick={() => connect()}>login</Button>
+          )}
 
-        <LanguageSwitcher />
+          <LanguageSwitcher />
+        </Stack>
       </Stack>
     </Stack>
   );

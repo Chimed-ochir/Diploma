@@ -1,6 +1,6 @@
 'use client';
 import { Button, Stack, Text } from '@chakra-ui/react';
-import { BsBookmarkCheckFill } from 'react-icons/bs';
+import { BsBookmarkCheckFill, BsFillNutFill } from 'react-icons/bs';
 import Web3 from 'web3';
 import { useAuth } from '@/context/Account';
 import { useState } from 'react';
@@ -12,23 +12,37 @@ export default function VerifyComponent({
   verifyText,
   success,
   error,
+  hash1,
+  hashError,
+  loading,
+  verify,
 }: {
   title: string;
   verifyText: string;
   success: string;
   error: string;
+  hash1: string;
+  hashError: string;
+  loading: string;
+  verify: string;
 }) {
   const { address } = useAuth();
   const [verifyValue, setVerifyValue] = useState<string | null>(null);
   const [inspect, setInspect] = useState<boolean | null>(null);
+  const [inspectHash, setInspectHash] = useState<boolean | null>(null);
   const [valueError, setValueError] = useState('');
   const [school, setSchool] = useState<number | string>('n/a');
   const [block, setBlock] = useState<number | string>('n/a');
+  const [wait, setWait] = useState(false);
   const [time, setTime] = useState<Date | string>(new Date()); // Set initial state to the current date
   console.log('title', title);
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
+    setInspect(null);
+    setValueError('');
+    setInspectHash(null);
+    setWait(true);
     const file = event.target.files?.[0];
     if (file) {
       const reader = new FileReader();
@@ -38,29 +52,40 @@ export default function VerifyComponent({
         const hashedContent = Web3.utils.soliditySha3(fileContent);
         if (hashedContent) {
           setVerifyValue(hashedContent);
+          setInspectHash(true);
         }
       };
       reader.onerror = (evt) => {
+        setInspectHash(false);
         console.error('Error reading file:', evt);
       };
     }
+    setWait(false);
   };
   console.log('school', school);
   const verifyHash = async () => {
     if (verifyValue) {
-      setValueError('Түр хүлээнэ үү...');
+      setWait(true);
+      setInspectHash(null);
+      setValueError('');
       await window.contract.methods
         .findDocHash(verifyValue)
         .call({ from: window.localStorage.getItem('userAddress') })
         .then((result: [string, string, string, string]) => {
           if (result[0] !== '0' && result[1] !== '0') {
-            setValueError('Амжилттай...');
+            setWait(false);
+
             console.log('result', result);
             print_verification_info(result, true);
           } else {
             console.log('result', result);
             print_verification_info(result, false);
+            setWait(false);
           }
+        })
+        .catch((err: any) => {
+          setValueError(verify);
+          setWait(false);
         });
     }
   };
@@ -80,11 +105,10 @@ export default function VerifyComponent({
 
       t.setSeconds(parseInt(result[0]));
       t.setHours(t.getHours() + 3);
-      console.log('t', t);
       setTime(t);
-      console.log('t.toString()', t);
       setBlock(result[0]);
     } else if (is_verified === false) {
+      // setValueError(verify);
       setInspect(false);
     }
   };
@@ -131,9 +155,27 @@ export default function VerifyComponent({
             />
           </label>
         </Stack>
+        {wait ? (
+          <Text textAlign='center' color='white' fontSize='lg'>
+            {loading}
+          </Text>
+        ) : valueError ? (
+          <Text textAlign='center' color='red' fontSize='lg'>
+            {valueError}
+          </Text>
+        ) : inspectHash ? (
+          <Text textAlign='center' color='white' fontSize='lg'>
+            {hash1}
+          </Text>
+        ) : inspectHash === false ? (
+          <Text textAlign='center' color='red' fontSize='lg'>
+            {hashError}
+          </Text>
+        ) : null}
         <Button
           onClick={verifyHash}
           borderRadius={'28px'}
+          isLoading={wait}
           bg='#2E68FF'
           color='white'
           w='300px'
@@ -143,6 +185,7 @@ export default function VerifyComponent({
         >
           {title}
         </Button>
+
         {inspect !== null && (
           <Stack
             color='black'

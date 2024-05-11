@@ -13,7 +13,11 @@
     "card2": "It only takes 1 second to verify the certificate.",
     "card22": "Fast operation",
     "card3": "100% secure and transparent operations will be conducted with blockchain technology.",
-    "card33": "Hopeful"
+    "card33": "Hopeful",
+    "hash1": "Document Hashed 😎",
+    "hashError": "Invalid Hash",
+    "loading": "Loading...",
+    "verify": "Diploma verified error"
   },
   "Upload": {
     "upload": "Upload",

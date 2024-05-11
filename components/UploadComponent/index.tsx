@@ -86,7 +86,8 @@ export default function UploadComponent({
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setErrorUpload('');
     setInspect(null);
-    setWait(false);
+    setWait(true);
+
     const file = event.target.files?.[0];
     if (file) {
       setUploadValue(file);
@@ -106,6 +107,7 @@ export default function UploadComponent({
         console.log('Error reading file:', evt);
       };
     }
+    setWait(false);
   };
   async function uploadFileToIpfs(): Promise<string> {
     const fileInput: HTMLInputElement | null = document.getElementById(
@@ -168,6 +170,7 @@ export default function UploadComponent({
       }
       setWait(true);
       setErrorUpload('');
+      setInspect(null);
       // const ipfsInstance: any = IPFS;
       const CID = await uploadFileToIpfs();
       setCidHash(CID);
@@ -278,24 +281,24 @@ export default function UploadComponent({
               accept='application/pdf, image/*'
             />
           </label>
-          {wait ? (
-            <Text textAlign='center' color='black' fontSize='lg'>
-              {loading}
-            </Text>
-          ) : errorUpload ? (
-            <Text textAlign='center' color='red' fontSize='lg'>
-              {errorUpload}
-            </Text>
-          ) : inspect ? (
-            <Text textAlign='center' color='black' fontSize='lg'>
-              {hash1}
-            </Text>
-          ) : inspect === false ? (
-            <Text textAlign='center' color='red' fontSize='lg'>
-              {hashError}
-            </Text>
-          ) : null}
         </Stack>
+        {wait ? (
+          <Text textAlign='center' color='white' fontSize='lg'>
+            {loading}
+          </Text>
+        ) : errorUpload ? (
+          <Text textAlign='center' color='red' fontSize='lg'>
+            {errorUpload}
+          </Text>
+        ) : inspect ? (
+          <Text textAlign='center' color='white' fontSize='lg'>
+            {hash1}
+          </Text>
+        ) : inspect === false ? (
+          <Text textAlign='center' color='red' fontSize='lg'>
+            {hashError}
+          </Text>
+        ) : null}
         <Button
           onClick={handleSendHash}
           borderRadius={'28px'}

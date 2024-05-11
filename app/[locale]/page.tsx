@@ -61,7 +61,7 @@ export default function Home({
         card2={t('card2')}
         card3={t('card3')}
         card11={t('card11')}
-        card22={t('card2')}
+        card22={t('card22')}
         card33={t('card33')}
         info={t('info')}
         info1={t('info1')}
