@@ -43,7 +43,7 @@ export default function RootLayout({
               </Stack>
 
               <Stack>{children}</Stack>
-              <Footer />
+              <Footer menu={t('menu')} contact={t('contact')} />
             </Stack>
           </AuthProvider>
         </ChakraProvider>

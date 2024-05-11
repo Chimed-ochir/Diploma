@@ -6,12 +6,21 @@ import {
   Stack,
   Image,
   Button,
+  Show,
+  useDisclosure,
+  Drawer,
+  DrawerOverlay,
+  DrawerFooter,
+  DrawerCloseButton,
+  DrawerContent,
+  DrawerBody,
 } from '@chakra-ui/react';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import LanguageSwitcher from '../LanguageSwitcher';
+import { IoMenu } from 'react-icons/io5';
 
 export const Header = ({ locale }: { locale: string }) => {
   const path = usePathname();
@@ -19,6 +28,8 @@ export const Header = ({ locale }: { locale: string }) => {
   const [tabs1, setTabs] = useState(['Home', 'Verify']);
   const tabs = ['Home', 'Verify'];
   const { connect, disconnect, address } = useAuth();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   // const accounts = [
   //   '0x896715dc4eaf034785b3b5a1f7078478ac24e77f',
   //   '0xc48b5c6bfad52b536c523ad5fe2484dfd4fbde2b',
@@ -113,50 +124,111 @@ export const Header = ({ locale }: { locale: string }) => {
             alt='Diploma icon'
           ></Image>
         </Stack>
-
-        <Stack
-          direction={'row'}
-          w='600px'
-          justifyContent={'space-around'}
-          ml={'40px'}
-        >
-          {tabs1.map((tab) => (
-            <Link
-              href={`/${
-                tab === 'Home' ? '' : `${locale}/${tab.toLowerCase()}`
-              }`}
-              key={tab}
-              passHref
-            >
-              <Text
-                borderBottom={
-                  currentTab === tab
-                    ? '2px solid white'
-                    : '2px solid transparent'
-                }
-                cursor='pointer'
-                fontSize='18px'
-                fontWeight={currentTab === tab ? '600' : '300'}
-                lineHeight='27px'
-                onClick={() => setCurrentTab(tab)}
-                py='6px'
-                px={'10px'}
-                color={'white'}
+        <Show above='lg'>
+          <Stack
+            direction={'row'}
+            w='600px'
+            justifyContent={'space-around'}
+            ml={'40px'}
+          >
+            {tabs1.map((tab) => (
+              <Link
+                href={`/${
+                  tab === 'Home' ? '' : `${locale}/${tab.toLowerCase()}`
+                }`}
+                key={tab}
+                passHref
               >
-                {tab}
-              </Text>
-            </Link>
-          ))}
-        </Stack>
-        <Stack direction='row'>
-          {address !== 'n/a' ? (
-            <Button onClick={() => disconnect()}>Logout</Button>
-          ) : (
-            <Button onClick={() => connect()}>login</Button>
-          )}
+                <Text
+                  borderBottom={
+                    currentTab === tab
+                      ? '2px solid white'
+                      : '2px solid transparent'
+                  }
+                  cursor='pointer'
+                  fontSize='18px'
+                  fontWeight={currentTab === tab ? '600' : '300'}
+                  lineHeight='27px'
+                  onClick={() => setCurrentTab(tab)}
+                  py='6px'
+                  px={'10px'}
+                  color={'white'}
+                >
+                  {tab}
+                </Text>
+              </Link>
+            ))}
+          </Stack>
+          <Stack direction='row'>
+            {address !== 'n/a' ? (
+              <Button onClick={() => disconnect()}>Logout</Button>
+            ) : (
+              <Button onClick={() => connect()}>login</Button>
+            )}
 
-          <LanguageSwitcher />
-        </Stack>
+            <LanguageSwitcher />
+          </Stack>
+        </Show>
+        <Show below='lg'>
+          <>
+            <IoMenu
+              onClick={onOpen}
+              color='white'
+              cursor='pointer'
+              size='40px'
+            />
+
+            <Drawer isOpen={isOpen} placement='right' onClose={onClose}>
+              <DrawerOverlay />
+              <DrawerContent bg={'#7126a2'} color='white'>
+                <DrawerCloseButton />
+
+                <DrawerBody>
+                  <Stack
+                    direction={'column'}
+                    mt='60px'
+                    justifyContent={'space-around'}
+                    gap='12px'
+                  >
+                    {tabs1.map((tab) => (
+                      <Link
+                        href={`/${
+                          tab === 'Home' ? '' : `${locale}/${tab.toLowerCase()}`
+                        }`}
+                        onClick={onClose}
+                        key={tab}
+                        passHref
+                      >
+                        <Text
+                          borderBottom={'1px solid white'}
+                          cursor='pointer'
+                          fontSize='18px'
+                          fontWeight={currentTab === tab ? '600' : '300'}
+                          lineHeight='27px'
+                          onClick={() => setCurrentTab(tab)}
+                          py='6px'
+                          px={'10px'}
+                          color={'white'}
+                        >
+                          {tab}
+                        </Text>
+                      </Link>
+                    ))}
+                  </Stack>
+                </DrawerBody>
+
+                <DrawerFooter justifyContent={'space-between'}>
+                  {address !== 'n/a' ? (
+                    <Button onClick={() => disconnect()}>Logout</Button>
+                  ) : (
+                    <Button onClick={() => connect()}>login</Button>
+                  )}
+                  <LanguageSwitcher />
+                </DrawerFooter>
+              </DrawerContent>
+            </Drawer>
+          </>
+        </Show>
       </Stack>
     </Stack>
   );

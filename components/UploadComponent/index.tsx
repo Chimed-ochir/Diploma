@@ -212,7 +212,7 @@ export default function UploadComponent({
       <Stack
         p={4}
         spacing={4}
-        w='80%'
+        w={{ base: '98%', md: '80%' }}
         mx='auto'
         borderRadius={'28px'}
         bg='#7126a2'
@@ -239,8 +239,12 @@ export default function UploadComponent({
               </Text>
             </Stack>
             <Stack direction='row' alignItems='center'>
-              <PiFolderSimpleUserDuotone color='blue' size={28} />
-              <Text textAlign='center' lineHeight={'27px'}>
+              <PiFolderSimpleUserDuotone
+                color='blue'
+                size={28}
+                style={{ minWidth: '28px' }}
+              />
+              <Text textAlign={{ base: 'left' }} lineHeight={'27px'} w='90%'>
                 {address}
               </Text>
             </Stack>
@@ -270,6 +274,7 @@ export default function UploadComponent({
           // border={'1px solid white'}
           w='100%'
           spacing={4}
+          overflow='hidden'
         >
           <label htmlFor='file-upload' style={{ position: 'relative' }}>
             <input
@@ -317,7 +322,7 @@ export default function UploadComponent({
         <Stack
           p={4}
           spacing={4}
-          w='80%'
+          w={{ base: '98%', md: '80%' }}
           mx='auto'
           borderRadius={'28px'}
           bg='#7126a2'
@@ -376,8 +381,14 @@ export default function UploadComponent({
             <Text>{value?.gasUsed} Gwei</Text>
           </Stack>
           <Stack direction={'row'} alignItems={'center'}>
-            <BiShapeTriangle color='white' size={28} />
-            <Text>{value?.to}</Text>
+            <BiShapeTriangle
+              color='white'
+              size={28}
+              style={{ minWidth: '28px' }}
+            />
+            <Text w='90%' textAlign={'left'}>
+              {value?.to}
+            </Text>
           </Stack>
         </Stack>
       ) : null}

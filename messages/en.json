@@ -17,7 +17,11 @@
     "hash1": "Document Hashed 😎",
     "hashError": "Invalid Hash",
     "loading": "Loading...",
-    "verify": "Diploma verified error"
+    "verify": "Diploma verified error",
+    "menu": "Menu",
+    "contact": "Contact",
+    "home": "Home",
+    "verify1": "Verify"
   },
   "Upload": {
     "upload": "Upload",

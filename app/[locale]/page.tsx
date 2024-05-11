@@ -29,7 +29,7 @@ export default function Home({
           backgroundPosition: 'center', // Optional: Adjust as needed
         }}
       >
-        <Stack w='50%' mt='-200px'>
+        <Stack w={{ base: '100%', lg: '50%' }} mt='-200px'>
           <Stack w='100%' textAlign={'center'}>
             <Text fontWeight='600' color='#a915cb' fontSize={'44'}>
               {t('diploma1')}

@@ -6,6 +6,7 @@ import {
   Stack,
   Image,
   Button,
+  Show,
 } from '@chakra-ui/react';
 import { Flex, Icon } from '@chakra-ui/react';
 import { FaFacebook, FaTwitter, FaGithub, FaInstagram } from 'react-icons/fa';
@@ -13,9 +14,13 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-export const Footer = () => {
-  const path = usePathname();
-
+export const Footer = ({
+  contact,
+  menu,
+}: {
+  contact: string;
+  menu: string;
+}) => {
   return (
     <Stack
       w='100%'
@@ -36,27 +41,35 @@ export const Footer = () => {
         // justifyContent={'space-between'}
       >
         <Stack
-          direction='row'
+          direction={{ base: 'column', sm: 'row' }}
           spacing={'8'}
           w='100%'
           justifyContent={'space-between'}
           alignItems={'flex-start'}
         >
+          <Show above='lg'>
+            {' '}
+            <Stack minW='220px' w='220px'>
+              <Image
+                src='/myLogo.png'
+                w='220px'
+                h='60px'
+                alt='Diploma icon'
+              ></Image>
+            </Stack>
+          </Show>
+
           <Stack>
-            <Image
-              src='/myLogo.png'
-              w='220px'
-              h='60px'
-              alt='Diploma icon'
-            ></Image>
+            <Text>{menu}</Text>
+            <Text fontSize={'20px'} cursor={'pointer'}>
+              Home
+            </Text>
+            <Text fontSize={'20px'} cursor={'pointer'}>
+              Verify
+            </Text>
           </Stack>
           <Stack>
-            <Text>Цэс</Text>
-            <Text fontSize={'20px'}>Home</Text>
-            <Text fontSize={'20px'}>Verify</Text>
-          </Stack>
-          <Stack>
-            <Text>Холбоо барих</Text>
+            <Text>{contact}</Text>
             <Text fontSize={'20px'}>Chimedochir2001@gmail.com</Text>
             <Text fontSize={'20px'}>88559247</Text>
             <Stack color='white' direction={'row'}>
@@ -76,7 +89,9 @@ export const Footer = () => {
           </Stack>
         </Stack>
 
-        <Text color='white'>Diploma © 2024</Text>
+        <Text color='white' textAlign={{ base: 'left' }}>
+          Diploma © All Copyright 2024
+        </Text>
       </Stack>
     </Stack>
   );

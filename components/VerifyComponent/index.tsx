@@ -122,7 +122,7 @@ export default function VerifyComponent({
   };
 
   return (
-    <Stack w='80%' mx='auto' mt='20px' h='calc(100vh - 100px)'>
+    <Stack w={{ base: '98%', md: '80%' }} mx='auto' mt='20px' mb='40px'>
       <Stack
         textColor='black'
         borderRadius={'28px'}
@@ -132,8 +132,11 @@ export default function VerifyComponent({
         alignItems={'center'}
         py='20px'
         fontSize={'24px'}
+        mt={{ base: '20px', md: '' }}
       >
-        <Text color={'white'}>{verifyText}</Text>
+        <Text color={'white'} w='90%'>
+          {verifyText}
+        </Text>
         <Stack
           borderRadius={'28px'}
           py='20px'
@@ -145,8 +148,12 @@ export default function VerifyComponent({
           border='1px solid #BCADFF'
           w='90%'
           spacing={4}
+          overflow={'hidden'}
         >
-          <label htmlFor='file-upload' style={{ position: 'relative' }}>
+          <label
+            htmlFor='file-upload'
+            style={{ position: 'relative', maxWidth: '300px' }}
+          >
             <input
               onChange={handleFileChange}
               id='doc-file'
@@ -191,7 +198,7 @@ export default function VerifyComponent({
             color='black'
             fontSize='24px'
             bg='white'
-            w='60%'
+            w={{ base: '90%', lg: '60%' }}
             borderRadius={'28px'}
             pl='20px'
             py='10px'

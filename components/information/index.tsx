@@ -6,6 +6,7 @@ import {
   Heading,
   Text,
   Stack,
+  Show,
 } from '@chakra-ui/react';
 
 interface InformationCardProps {
@@ -23,7 +24,7 @@ const InformationCard: React.FC<InformationCardProps> = ({
 }) => {
   return (
     <Box
-      w={'33.3%'}
+      w={{ base: '100%', lg: '33.3%' }}
       borderRadius='28px'
       overflow='hidden'
       m={4}
@@ -80,7 +81,10 @@ export default function InformationSection({
       pb={'20px'}
     >
       <Container maxW='container.xl' mt='40px' w='80%'>
-        <Stack justifyContent='center' direction='row'>
+        <Stack
+          justifyContent='center'
+          direction={{ base: 'column', lg: 'row' }}
+        >
           <InformationCard
             icon='./undraw_investment_data_re_sh9x.svg'
             heading={card11}
@@ -98,7 +102,11 @@ export default function InformationSection({
           />
         </Stack>
         <Stack direction='row' mt='60px'>
-          <Stack fontSize={'28px'} fontWeight={'700'} w='60%'>
+          <Stack
+            fontSize={'28px'}
+            fontWeight={'700'}
+            w={{ base: '100%', lg: '60%' }}
+          >
             <Stack
               fontSize={'44px'}
               fontWeight={'700'}
@@ -132,8 +140,9 @@ export default function InformationSection({
               </Stack>
             </Stack>
           </Stack>
-
-          <Image src='./aAaA.png' w='50%' h='50%' alt='Diploma icon'></Image>
+          <Show above='lg'>
+            <Image src='./aAaA.png' w='50%' h='50%' alt='Diploma icon'></Image>
+          </Show>
         </Stack>
       </Container>
     </Box>
