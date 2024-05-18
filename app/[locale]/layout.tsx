@@ -52,11 +52,13 @@ export default function RootLayout({
 
               <Stack>{children}</Stack>
               <Footer
+                locale={locale}
                 menu={t('menu')}
                 head1={t('head1')}
                 head2={t('head2')}
                 head3={t('head3')}
                 contact={t('contact')}
+                admin={t('admin')}
               />
             </Stack>
           </AuthProvider>

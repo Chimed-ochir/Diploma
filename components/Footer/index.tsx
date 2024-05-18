@@ -20,13 +20,19 @@ export const Footer = ({
   head1,
   head2,
   head3,
+  locale,
+  admin,
 }: {
   contact: string;
   menu: string;
   head1: string;
   head2: string;
   head3: string;
+  locale: string;
+  admin: string;
 }) => {
+  const { address } = useAuth();
+  console.log('address', address);
   return (
     <Stack
       w='100%'
@@ -70,15 +76,50 @@ export const Footer = ({
 
           <Stack>
             <Text fontSize={'20px'}>{menu}</Text>
-            <Text fontSize={'16px'} cursor={'pointer'} color='#B7BDC6'>
-              {head1}
-            </Text>
-            <Text fontSize={'16px'} cursor={'pointer'} color='#B7BDC6'>
-              {head2}
-            </Text>
-            <Text fontSize={'16px'} cursor={'pointer'} color='#B7BDC6'>
-              {head3}
-            </Text>
+            <Link href={`/${''}`} passHref>
+              <Text
+                fontSize={'16px'}
+                cursor={'pointer'}
+                color='#B7BDC6'
+                _hover={{ textDecoration: 'underline' }}
+              >
+                {head1}
+              </Text>
+            </Link>
+            <Link href={`/${locale}/verify`} passHref>
+              <Text
+                fontSize='16px'
+                cursor='pointer'
+                color='#B7BDC6'
+                _hover={{ textDecoration: 'underline' }}
+              >
+                {head2}
+              </Text>
+            </Link>
+            {address != 'n/a' ? (
+              <Link href={`/${locale}/upload`} passHref>
+                <Text
+                  fontSize={'16px'}
+                  cursor={'pointer'}
+                  color='#B7BDC6'
+                  _hover={{ textDecoration: 'underline' }}
+                >
+                  {head3}
+                </Text>
+              </Link>
+            ) : null}
+            {address === '0x896715dc4eaf034785b3b5a1f7078478ac24e77f' ? (
+              <Link href={`/${locale}/admin`} passHref>
+                <Text
+                  fontSize={'16px'}
+                  cursor={'pointer'}
+                  color='#B7BDC6'
+                  _hover={{ textDecoration: 'underline' }}
+                >
+                  {admin}
+                </Text>
+              </Link>
+            ) : null}
           </Stack>
           <Stack>
             <Text fontSize={'20px'}>{contact}</Text>
