@@ -21,8 +21,25 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import LanguageSwitcher from '../LanguageSwitcher';
 import { IoMenu } from 'react-icons/io5';
+import { ImHome2 } from 'react-icons/im';
 
-export const Header = ({ locale }: { locale: string }) => {
+export const Header = ({
+  locale,
+  home1,
+  home2,
+  home3,
+  login,
+  logout,
+  admin,
+}: {
+  locale: string;
+  home1: string;
+  home2: string;
+  home3: string;
+  login: string;
+  logout: string;
+  admin: string;
+}) => {
   const path = usePathname();
   const [currentTab, setCurrentTab] = useState('Home');
   const [tabs1, setTabs] = useState(['Home', 'Verify']);
@@ -104,9 +121,11 @@ export const Header = ({ locale }: { locale: string }) => {
   return (
     <Stack
       w='100%'
-      style={{
-        background: `linear-gradient(260deg, rgba(148,13,186,1) 0%, rgba(1,5,30,1) 41%, rgba(1,5,30,1) 59%, rgba(148,13,186,1) 100%)`,
-      }}
+      // style={{
+      //   background: `linear-gradient(260deg, rgba(148,13,186,1) 0%, rgba(1,5,30,1) 41%, rgba(1,5,30,1) 59%, rgba(148,13,186,1) 100%)`,
+      // }}
+      bg='black'
+      borderBottom='1px solid white'
     >
       <Stack
         direction={'row'}
@@ -142,7 +161,7 @@ export const Header = ({ locale }: { locale: string }) => {
                 <Text
                   borderBottom={
                     currentTab === tab
-                      ? '2px solid white'
+                      ? '2px solid #B7BDC6'
                       : '2px solid transparent'
                   }
                   cursor='pointer'
@@ -152,18 +171,30 @@ export const Header = ({ locale }: { locale: string }) => {
                   onClick={() => setCurrentTab(tab)}
                   py='6px'
                   px={'10px'}
-                  color={'white'}
+                  color={'#B7BDC6'}
                 >
-                  {tab}
+                  {tab === 'Home'
+                    ? home1
+                    : tab === 'Upload'
+                    ? home3
+                    : tab === 'Verify'
+                    ? home2
+                    : tab === 'Admin'
+                    ? admin
+                    : ''}
                 </Text>
               </Link>
             ))}
           </Stack>
           <Stack direction='row'>
             {address !== 'n/a' ? (
-              <Button onClick={() => disconnect()}>Logout</Button>
+              <Button onClick={() => disconnect()} bg='#3874FF' color='white'>
+                {logout}
+              </Button>
             ) : (
-              <Button onClick={() => connect()}>login</Button>
+              <Button onClick={() => connect()} bg='#3874FF' color='white'>
+                {login}
+              </Button>
             )}
 
             <LanguageSwitcher />
@@ -180,7 +211,7 @@ export const Header = ({ locale }: { locale: string }) => {
 
             <Drawer isOpen={isOpen} placement='right' onClose={onClose}>
               <DrawerOverlay />
-              <DrawerContent bg={'#7126a2'} color='white'>
+              <DrawerContent bg={'#23262f'} color='white'>
                 <DrawerCloseButton />
 
                 <DrawerBody>
@@ -210,7 +241,15 @@ export const Header = ({ locale }: { locale: string }) => {
                           px={'10px'}
                           color={'white'}
                         >
-                          {tab}
+                          {tab === 'Home'
+                            ? home1
+                            : tab === 'Upload'
+                            ? home3
+                            : tab === 'Verify'
+                            ? home2
+                            : tab === 'Admin'
+                            ? admin
+                            : ''}
                         </Text>
                       </Link>
                     ))}
@@ -219,9 +258,21 @@ export const Header = ({ locale }: { locale: string }) => {
 
                 <DrawerFooter justifyContent={'space-between'}>
                   {address !== 'n/a' ? (
-                    <Button onClick={() => disconnect()}>Logout</Button>
+                    <Button
+                      onClick={() => disconnect()}
+                      bg='#3874FF'
+                      color='white'
+                    >
+                      {logout}
+                    </Button>
                   ) : (
-                    <Button onClick={() => connect()}>login</Button>
+                    <Button
+                      onClick={() => connect()}
+                      bg='#3874FF'
+                      color='white'
+                    >
+                      {login}
+                    </Button>
                   )}
                   <LanguageSwitcher />
                 </DrawerFooter>

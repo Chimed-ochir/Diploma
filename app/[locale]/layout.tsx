@@ -32,18 +32,32 @@ export default function RootLayout({
         <ChakraProvider>
           <AuthProvider>
             <Stack
-              style={{
-                background: `radial-gradient(circle, rgba(148,13,186,1) 1%, rgba(1,5,30,1) 100%)`,
-              }}
-              bg='white'
+              // style={{
+              //   background: `radial-gradient(circle, rgba(148,13,186,1) 1%, rgba(1,5,30,1) 100%)`,
+              // }}
+              bg='#23262f'
               gap='0'
             >
-              <Stack bg='white' zIndex={'1'}>
-                <Header locale={locale} />
+              <Stack bg='black' zIndex={'1'}>
+                <Header
+                  locale={locale}
+                  home1={t('head1')}
+                  home2={t('head2')}
+                  home3={t('head3')}
+                  login={t('login')}
+                  logout={t('logout')}
+                  admin={t('admin')}
+                />
               </Stack>
 
               <Stack>{children}</Stack>
-              <Footer menu={t('menu')} contact={t('contact')} />
+              <Footer
+                menu={t('menu')}
+                head1={t('head1')}
+                head2={t('head2')}
+                head3={t('head3')}
+                contact={t('contact')}
+              />
             </Stack>
           </AuthProvider>
         </ChakraProvider>

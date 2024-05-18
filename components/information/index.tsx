@@ -30,7 +30,8 @@ const InformationCard: React.FC<InformationCardProps> = ({
       m={4}
       p={5}
       textAlign='center'
-      bg='#7126a2'
+      bg='#23262f'
+      minH='330px'
       fontWeight={'600'}
       boxShadow='0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12)'
       transition='box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1)'
@@ -45,7 +46,7 @@ const InformationCard: React.FC<InformationCardProps> = ({
       <Heading as='h4' size='md' mt={4}>
         {heading}
       </Heading>
-      <Text mt={2} fontSize='lg'>
+      <Text mt={2} color='#B7BDC6' fontSize='16px'>
         {text}
       </Text>
     </Box>
@@ -77,12 +78,15 @@ export default function InformationSection({
       // h='100vh'
       color='white'
       overflow={'hidden'}
-      borderBottom={'1px solid white'}
       pb={'20px'}
+      bg='#17181c'
     >
-      <Container maxW='container.xl' mt='40px' w='80%'>
+      <Container maxW='container.xl' mt='40px' w={{ base: '90%', lg: '80%' }}>
         <Stack
           justifyContent='center'
+          alignItems='center'
+          mx='auto'
+          w='100%'
           direction={{ base: 'column', lg: 'row' }}
         >
           <InformationCard

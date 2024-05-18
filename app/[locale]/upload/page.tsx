@@ -12,6 +12,7 @@ export default function Page() {
         hashError={t('hashError')}
         input={t('input')}
         loading={t('loading')}
+        text={t('text')}
       />
     </Stack>
   );

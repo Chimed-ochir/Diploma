@@ -1,6 +1,5 @@
 import { Stack } from '@chakra-ui/react';
 import { redirect } from 'next/navigation';
-
 // Assign the custom window object
 export default function RootLayout({
   children,
@@ -13,7 +12,7 @@ export default function RootLayout({
   //       '0x896715dC4eAF034785B3b5a1f7078478ac24e77f') ||
   //   typeof window === 'undefined'
   // ) {
-  //   redirect('/');
+  //   redirect('/mn');
   // }
   // console.log(
   //   'window.localStorage.getItem(userAddres)',

@@ -17,18 +17,26 @@ import { useEffect, useState } from 'react';
 export const Footer = ({
   contact,
   menu,
+  head1,
+  head2,
+  head3,
 }: {
   contact: string;
   menu: string;
+  head1: string;
+  head2: string;
+  head3: string;
 }) => {
   return (
     <Stack
       w='100%'
-      style={{
-        background: `linear-gradient(260deg, rgba(1,5,30,1) 0%, rgba(148,13,186,1) 50%, rgba(1,5,30,1) 100%)`,
-      }}
+      // style={{
+      //   background: `linear-gradient(260deg, rgba(1,5,30,1) 0%, rgba(148,13,186,1) 50%, rgba(1,5,30,1) 100%)`,
+      // }}
+      bg='black'
       boxShadow='0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12)'
       borderTop='1px solid white'
+      pb='10px'
     >
       <Stack
         w='80%'
@@ -38,6 +46,7 @@ export const Footer = ({
         color='white'
         fontSize={'28px'}
         pt='20px'
+
         // justifyContent={'space-between'}
       >
         <Stack
@@ -60,19 +69,26 @@ export const Footer = ({
           </Show>
 
           <Stack>
-            <Text>{menu}</Text>
-            <Text fontSize={'20px'} cursor={'pointer'}>
-              Home
+            <Text fontSize={'20px'}>{menu}</Text>
+            <Text fontSize={'16px'} cursor={'pointer'} color='#B7BDC6'>
+              {head1}
             </Text>
-            <Text fontSize={'20px'} cursor={'pointer'}>
-              Verify
+            <Text fontSize={'16px'} cursor={'pointer'} color='#B7BDC6'>
+              {head2}
+            </Text>
+            <Text fontSize={'16px'} cursor={'pointer'} color='#B7BDC6'>
+              {head3}
             </Text>
           </Stack>
           <Stack>
-            <Text>{contact}</Text>
-            <Text fontSize={'20px'}>Chimedochir2001@gmail.com</Text>
-            <Text fontSize={'20px'}>88559247</Text>
-            <Stack color='white' direction={'row'}>
+            <Text fontSize={'20px'}>{contact}</Text>
+            <Text fontSize={'16px'} color='#B7BDC6'>
+              Diploma@gmail.com
+            </Text>
+            <Text fontSize={'16px'} color='#B7BDC6'>
+              99112345
+            </Text>
+            <Stack color='#B7BDC6' direction={'row'}>
               <a href='#'>
                 <Icon as={FaFacebook} />
               </a>
@@ -89,7 +105,7 @@ export const Footer = ({
           </Stack>
         </Stack>
 
-        <Text color='white' textAlign={{ base: 'left' }}>
+        <Text textAlign={{ base: 'left' }} color='#B7BDC6' fontSize={'20px'}>
           Diploma © All Copyright 2024
         </Text>
       </Stack>

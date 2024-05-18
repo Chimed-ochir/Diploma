@@ -1,4 +1,4 @@
-import { Box, Button, Stack, Text, Image } from '@chakra-ui/react';
+import { Box, Button, Stack, Text, Image, Show } from '@chakra-ui/react';
 import InformationSection from '@/components/information';
 // import { useRouter } from 'next/navigation';
 import AboutSection from '@/components/About';
@@ -14,46 +14,75 @@ export default function Home({
   console.log('locale', locale);
   return (
     <Stack
-    // bg='white'
-    // bg='#ebebeb'
+      // bg='white'
+      // bg='#ebebeb'
+      gap='0'
     >
       <Stack
-        h='calc(100vh - 100px)'
-        fontSize={'64px'}
         w='100%'
+        bg='#23262f'
         alignItems={'center'}
-        direction={'row'}
-        style={{
-          backgroundImage: 'url(/agame.jpeg)', // Corrected
-          backgroundSize: 'cover', // Optional: Adjust as needed
-          backgroundPosition: 'center', // Optional: Adjust as needed
-        }}
+        justifyContent={'center'}
       >
-        <Stack w={{ base: '100%', lg: '50%' }} mt='-200px'>
-          <Stack w='100%' textAlign={'center'}>
-            <Text fontWeight='600' color='#a915cb' fontSize={'44'}>
-              {t('diploma1')}
-            </Text>
-            <Text fontWeight='600' color='white' fontSize={'64'}>
-              {' '}
-              {t('diploma')}
-            </Text>{' '}
-          </Stack>
-          <Link href={`/${locale}/verify`}>
-            <Stack>
-              <Button
-                color='white'
-                bg='#a915cb'
-                height={'54px'}
-                w='200px'
-                mx='auto'
-                mt='30px'
-                // onClick={() => router.push('/verify')}
-              >
-                {t('button')}
-              </Button>
+        <Stack
+          h='calc(100vh - 300px)'
+          fontSize={'64px'}
+          w={{ base: '80%', lg: '90%', xl: '80%' }}
+          alignItems={'start'}
+          direction={{ base: 'column', lg: 'row' }}
+          pt='50px'
+          // style={{
+          //   backgroundImage: 'url(/agame.jpeg)', // Corrected
+          //   backgroundSize: 'cover', // Optional: Adjust as needed
+          //   backgroundPosition: 'center', // Optional: Adjust as needed
+          // }}
+        >
+          <Stack w={{ base: '100%', lg: '50%' }} mt='50px'>
+            <Stack w='100%' textAlign={'center'}>
+              <Text fontWeight='600' color='#3874FF' fontSize={'40'}>
+                {t('diploma1')}
+              </Text>
+              <Text fontWeight='600' color='white' fontSize={'58'}>
+                {' '}
+                {t('diploma')}
+              </Text>{' '}
             </Stack>
-          </Link>
+            <Link href={`/${locale}/verify`}>
+              <Stack>
+                <Button
+                  color='white'
+                  bg='#3874FF'
+                  height={'54px'}
+                  w='200px'
+                  mx='auto'
+                  mt='30px'
+                  // onClick={() => router.push('/verify')}
+                >
+                  {t('button')}
+                </Button>
+              </Stack>
+            </Link>
+          </Stack>
+          <Show above='lg'>
+            <Stack
+              w={'50%'}
+              direction='row'
+              overflow={'hidden'}
+              alignItems={'center'}
+              justifyContent={{ base: 'center' }}
+            >
+              <Image src='./HM.png' alt='about' width={300} height={300} />
+              <Image
+                src='./good.png'
+                alt='about'
+                width={150}
+                height={200}
+                alignSelf={'end'}
+                justifySelf={'start'}
+                mb='15px'
+              />
+            </Stack>
+          </Show>
         </Stack>
       </Stack>
       <InformationSection

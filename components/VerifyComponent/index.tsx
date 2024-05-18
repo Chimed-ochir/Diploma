@@ -122,17 +122,25 @@ export default function VerifyComponent({
   };
 
   return (
-    <Stack w={{ base: '98%', md: '80%' }} mx='auto' mt='20px' mb='40px'>
+    <Stack
+      w={{ base: '98%', md: '80%' }}
+      mx='auto'
+      mt='20px'
+      mb='40px'
+      h='calc(100vh - 330px)'
+    >
       <Stack
         textColor='black'
         borderRadius={'28px'}
         minHeight={'300px'}
-        bg='#7126a2'
+        // bg='#23262f'
+        bg='#131315'
         justifyContent={'space-evenly'}
         alignItems={'center'}
         py='20px'
         fontSize={'24px'}
         mt={{ base: '20px', md: '' }}
+        border='1px solid #B7BDC6'
       >
         <Text color={'white'} w='90%'>
           {verifyText}
@@ -143,16 +151,19 @@ export default function VerifyComponent({
           pl='25px'
           textAlign={'center'}
           // bg='#2E68FF'
-          bg='white'
+          bg='#23262f'
           color='#2E68FF'
-          border='1px solid #BCADFF'
+          border='1px solid #B7BDC6'
           w='90%'
           spacing={4}
           overflow={'hidden'}
         >
           <label
             htmlFor='file-upload'
-            style={{ position: 'relative', maxWidth: '300px' }}
+            style={{
+              position: 'relative',
+              maxWidth: '300px',
+            }}
           >
             <input
               onChange={handleFileChange}
@@ -187,7 +198,7 @@ export default function VerifyComponent({
           color='white'
           w='300px'
           mx='auto'
-          fontSize={'24px'}
+          fontSize={'20px'}
           height={'54px'}
         >
           {title}

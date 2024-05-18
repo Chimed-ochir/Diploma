@@ -46,6 +46,7 @@ export default function UploadComponent({
   input,
   uploadError,
   loading,
+  text,
 }: {
   upload: string;
   hash1: string;
@@ -53,12 +54,13 @@ export default function UploadComponent({
   input: string;
   uploadError: string;
   loading: string;
+  text: string;
 }) {
   const [uploadValue, setUploadValue] = useState<File | null>(null);
   const [inspect, setInspect] = useState<boolean | null>(null);
   const toast = useToast();
   const [hash, setHash] = useState<string>('');
-  const [value, setValue] = useState<ResultType>();
+  const [value, setValue] = useState<ResultType | null>(null);
   const [errorUpload, setErrorUpload] = useState<string>('');
   const [cidHash, setCidHash] = useState('');
   const { chainId, address, view, meta, name, count, balance } = useAuth();
@@ -87,7 +89,7 @@ export default function UploadComponent({
     setErrorUpload('');
     setInspect(null);
     setWait(true);
-
+    setValue(null);
     const file = event.target.files?.[0];
     if (file) {
       setUploadValue(file);
@@ -215,11 +217,12 @@ export default function UploadComponent({
         w={{ base: '98%', md: '80%' }}
         mx='auto'
         borderRadius={'28px'}
-        bg='#7126a2'
+        bg='#131315'
         mt='20px'
         color='black'
         fontSize={'24px'}
         shadow={'5px'}
+        border='1px solid #B7BDC6'
       >
         {meta ? <MetaMaskAlert /> : null}
         {view ? (
@@ -267,14 +270,12 @@ export default function UploadComponent({
           py='20px'
           pl='25px'
           textAlign={'center'}
-          border='1px solid #BCADFF'
-          // bg='#2E68FF'
-          bg='white'
-          color='#2E68FF'
-          // border={'1px solid white'}
           w='100%'
           spacing={4}
           overflow='hidden'
+          bg='#23262f'
+          color='#2E68FF'
+          border='1px solid #B7BDC6'
         >
           <label htmlFor='file-upload' style={{ position: 'relative' }}>
             <input
@@ -311,7 +312,7 @@ export default function UploadComponent({
           color='white'
           w='300px'
           mx='auto'
-          fontSize={'24px'}
+          fontSize={'20px'}
           height={'54px'}
           isLoading={wait}
         >
@@ -325,13 +326,15 @@ export default function UploadComponent({
           w={{ base: '98%', md: '80%' }}
           mx='auto'
           borderRadius={'28px'}
-          bg='#7126a2'
+          bg='#131315'
+          border='1px solid #B7BDC6'
           mt='20px'
-          color='white'
+          color='#B7BDC6'
           fontSize={'24px'}
           shadow={'5px'}
-          mb='10px'
+          mb='20px'
         >
+          <Text color='white'>{text}</Text>
           <Stack
             onClick={() => {
               if (value?.transactionHash) {

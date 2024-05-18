@@ -21,7 +21,18 @@
     "menu": "Menu",
     "contact": "Contact",
     "home": "Home",
-    "verify1": "Verify"
+    "verify1": "Verify",
+    "head1": "Home",
+    "head2": "Verify",
+    "head3": "Upload",
+    "login": "Login",
+    "logout": "Logout",
+    "admin": "Admin",
+    "admin1": "School address",
+    "admin2": "School name",
+    "admin3": "School add",
+    "admin4": "School delete",
+    "admin5": "School update"
   },
   "Upload": {
     "upload": "Upload",
@@ -29,6 +40,7 @@
     "hashError": "Invalid Hash",
     "input": "Submit thesis file.",
     "uploadError": "There was an error uploading.",
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "text": "Diploma upload information :"
   }
 }
