@@ -39,10 +39,18 @@ export default function Home({
         >
           <Stack w={{ base: '100%', lg: '50%' }} mt='50px'>
             <Stack w='100%' textAlign={'center'}>
-              <Text fontWeight='600' color='#3874FF' fontSize={'40'}>
+              <Text
+                fontWeight='600'
+                color='#3874FF'
+                fontSize={{ base: '30', sm: '40' }}
+              >
                 {t('diploma1')}
               </Text>
-              <Text fontWeight='600' color='white' fontSize={'58'}>
+              <Text
+                fontWeight='600'
+                color='white'
+                fontSize={{ base: '40', sm: '58' }}
+              >
                 {' '}
                 {t('diploma')}
               </Text>{' '}
