@@ -64,6 +64,7 @@ export default function Home({
                   w='200px'
                   mx='auto'
                   mt='30px'
+                  mb={{ base: '20px', sm: '' }}
                   // onClick={() => router.push('/verify')}
                 >
                   {t('button')}
