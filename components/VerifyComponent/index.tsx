@@ -6,6 +6,7 @@ import { useAuth } from '@/context/Account';
 import { useState } from 'react';
 import { IoTime } from 'react-icons/io5';
 import { FaCube, FaUniversity } from 'react-icons/fa';
+import MetaMaskAlert from '../MetaMask';
 
 export default function VerifyComponent({
   title,
@@ -16,6 +17,8 @@ export default function VerifyComponent({
   hashError,
   loading,
   verify,
+  text1,
+  text2,
 }: {
   title: string;
   verifyText: string;
@@ -25,8 +28,10 @@ export default function VerifyComponent({
   hashError: string;
   loading: string;
   verify: string;
+  text1: string;
+  text2: string;
 }) {
-  const { address } = useAuth();
+  const { address, meta } = useAuth();
   const [verifyValue, setVerifyValue] = useState<string | null>(null);
   const [inspect, setInspect] = useState<boolean | null>(null);
   const [inspectHash, setInspectHash] = useState<boolean | null>(null);
@@ -35,7 +40,6 @@ export default function VerifyComponent({
   const [block, setBlock] = useState<number | string>('n/a');
   const [wait, setWait] = useState(false);
   const [time, setTime] = useState<Date | string>(new Date()); // Set initial state to the current date
-  console.log('title', title);
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -68,6 +72,10 @@ export default function VerifyComponent({
       setWait(true);
       setInspectHash(null);
       setValueError('');
+
+      console.log('verifyValue', verifyValue);
+      console.log('window.contract.methods', window.contract.methods);
+      console.log('---', window.localStorage.getItem('userAddress'));
       await window.contract.methods
         .findDocHash(verifyValue)
         .call({ from: window.localStorage.getItem('userAddress') })
@@ -84,6 +92,7 @@ export default function VerifyComponent({
           }
         })
         .catch((err: any) => {
+          console.log('err', err);
           setValueError(verify);
           setWait(false);
         });
@@ -127,7 +136,7 @@ export default function VerifyComponent({
       mx='auto'
       mt='20px'
       mb='40px'
-      h='calc(100vh - 330px)'
+      h='calc(100vh - 100px)'
     >
       <Stack
         textColor='black'
@@ -142,9 +151,14 @@ export default function VerifyComponent({
         mt={{ base: '20px', md: '' }}
         border='1px solid #B7BDC6'
       >
-        <Text color={'white'} w='90%'>
-          {verifyText}
-        </Text>
+        {meta ? (
+          <MetaMaskAlert text1={text1} text2={text2} />
+        ) : (
+          <Text color={'white'} w='90%'>
+            {verifyText}
+          </Text>
+        )}
+
         <Stack
           borderRadius={'28px'}
           py='20px'
@@ -170,6 +184,7 @@ export default function VerifyComponent({
               id='doc-file'
               type='file'
               accept='application/pdf, image/*'
+              disabled={meta}
             />
           </label>
         </Stack>
@@ -200,6 +215,7 @@ export default function VerifyComponent({
           mx='auto'
           fontSize={'20px'}
           height={'54px'}
+          disabled={meta}
         >
           {title}
         </Button>

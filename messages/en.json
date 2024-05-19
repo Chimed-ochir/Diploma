@@ -32,7 +32,9 @@
     "admin2": "School name",
     "admin3": "School add",
     "admin4": "School delete",
-    "admin5": "School update"
+    "admin5": "School update",
+    "text1": "Please download MetaMask at ",
+    "text2": "Metamask Site"
   },
   "Upload": {
     "upload": "Upload",

@@ -361,6 +361,9 @@ export const AuthProvider = ({ children }: React.PropsWithChildren) => {
         "Request of type 'wallet_requestPermissions' already pending for origin http://localhost:3000. Please wait."
       ) {
         message = 'Холбогдох хүсэлт аль хэдийн илгээсэн байна. Түр хүлээнэ үү';
+      } else if (error.message === 'customWindow.ethereum is undefined') {
+        message =
+          'МетаМаск extension татна уу. Мөн Test(Sepolia testnet chain) горим дээр тохируулна уу https://metamask.io/download';
       } else {
         message = 'МетаМаск хаягтай холбогдож чадсангүй.';
       }

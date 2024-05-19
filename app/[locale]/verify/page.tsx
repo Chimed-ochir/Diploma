@@ -14,6 +14,8 @@ export default function Page() {
         hashError={t('hashError')}
         loading={t('loading')}
         verify={t('verify')}
+        text1={t('text1')}
+        text2={t('text2')}
       />
     </Stack>
   );

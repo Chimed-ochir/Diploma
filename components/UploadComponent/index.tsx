@@ -13,7 +13,8 @@ import { useAuth } from '@/context/Account';
 import MetaMaskAlert from '@/components/MetaMask';
 import { FaGasPump } from 'react-icons/fa';
 import { SiBlockchaindotcom } from 'react-icons/si';
-const projectId = '28LuNAotbXzcvtpOcE9F8ayKOeP';
+// const projectId = '28LuNAotbXzcvtpOcE9F8ayKOeP';
+const projectId = 'd176b90ef9154ae1a10419a554ee8498';
 import { FaHashtag } from 'react-icons/fa';
 import { SiIpfs } from 'react-icons/si';
 
@@ -22,7 +23,8 @@ import { SiIpfs } from 'react-icons/si';
 // const projectId = '5289d049085c47688271917af6cc1f4a';
 //Your api secret in ifura.io
 // const projectSecret = 'oQtcgoWwe815ozW0YhbajgvwxnwXqea6i/Jeycp2vG6yyluWIY5Xug';
-const projectSecret = '3de3d9c099c6c0c168e39b8bc03e2f7a';
+// const projectSecret = '3de3d9c099c6c0c168e39b8bc03e2f7a';
+const projectSecret = 'db5bb64fe46345108902e7c0776fe6d7';
 declare global {
   interface Window {
     ethereum?: any;
@@ -47,6 +49,8 @@ export default function UploadComponent({
   uploadError,
   loading,
   text,
+  text1,
+  text2,
 }: {
   upload: string;
   hash1: string;
@@ -55,6 +59,8 @@ export default function UploadComponent({
   uploadError: string;
   loading: string;
   text: string;
+  text1: string;
+  text2: string;
 }) {
   const [uploadValue, setUploadValue] = useState<File | null>(null);
   const [inspect, setInspect] = useState<boolean | null>(null);
@@ -224,7 +230,7 @@ export default function UploadComponent({
         shadow={'5px'}
         border='1px solid #B7BDC6'
       >
-        {meta ? <MetaMaskAlert /> : null}
+        {meta ? <MetaMaskAlert text1={text1} text2={text2} /> : null}
         {view ? (
           <Stack
             borderRadius={'28px'}
