@@ -13,6 +13,8 @@ export default function Page() {
         input={t('input')}
         loading={t('loading')}
         text={t('text')}
+        text1={t('text1')}
+        text2={t('text2')}
       />
     </Stack>
   );
